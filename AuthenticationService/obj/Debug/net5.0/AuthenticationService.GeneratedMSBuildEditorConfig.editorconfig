@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = AuthenticationService
-build_property.ProjectDir = c:\Users\saent\Projects\Social-Media\AuthenticationService\
+build_property.ProjectDir = C:\Users\saent\Projects\Social-Media\AuthenticationService\

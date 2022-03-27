@@ -13,5 +13,11 @@ namespace AuthenticationService.Controllers{
         public ActionResult Test(){
             return Ok("yes");
         }
+
+        [Route("TestBuild")]
+        [HttpGet]
+        public ActionResult TestBuild(){
+            return Ok("Okay, changes applied successfully");
+        }
     }
 }
