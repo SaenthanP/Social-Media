@@ -22,4 +22,4 @@ jobs:
         docker build -t saenthan/authenticationservice:latest .
     - name: Push to Docker Hub
       run: |
-        docker push saenthan/authenticationservice
+        docker push ${{secrets.DOCKER_USERNAME}}/authenticationservice
