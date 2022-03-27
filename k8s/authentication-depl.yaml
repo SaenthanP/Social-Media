@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authenticationservice
+  template:
+    metadata:
+      labels:
+        app: authenticationservice
+    spec:
+      containers:
+      - name: authenticationservice
+        image: saenthan/authenticationservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: authenticationservice
+  ports:
+  - name: authenticationservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
