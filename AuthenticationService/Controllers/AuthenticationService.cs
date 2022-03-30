@@ -1,12 +1,15 @@
+using AuthenticationService.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Controllers{
     [Route("api/[controller]")]
     [ApiController]
     public class AuthenticationController:ControllerBase{
-        public AuthenticationController()
+        private readonly IUserRepo _userRepo;
+
+        public AuthenticationController(IUserRepo userRepo)
         {
-            
+            _userRepo=userRepo;
         }
 
         [HttpGet]

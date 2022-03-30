@@ -38,9 +38,9 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "DependancyInjection": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[1.0.0.1, )"
+              "version": "[8.1.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
