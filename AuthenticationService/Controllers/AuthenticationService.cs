@@ -1,4 +1,5 @@
 using AuthenticationService.Data;
+using AuthenticationService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Controllers{
@@ -17,10 +18,10 @@ namespace AuthenticationService.Controllers{
             return Ok("yes");
         }
 
-        [Route("TestBuild")]
-        [HttpGet]
-        public ActionResult TestBuild(){
-            return Ok("Okay, changes applied successfully");
+        [HttpPost]
+        public ActionResult<ReadUserDto> CreateUser(CreateUserDto createUser){
+            
+            return null;
         }
     }
 }

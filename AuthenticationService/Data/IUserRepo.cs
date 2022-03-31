@@ -7,5 +7,7 @@ namespace AuthenticationService.Data{
         ReadUserDto CreateUser(CreateUserDto createUserDto);
         bool IsUsernameExists(string username);
 
+        bool IsEmailExists(string email);
+    
     }
 }

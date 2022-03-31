@@ -8,5 +8,8 @@ namespace AuthenticationService.Dtos{
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
+        [Required]
+        [EmailAddress(ErrorMessage ="Not a valid email")]
+        public string Email { get; set; }
     }
 }
