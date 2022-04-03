@@ -62,3 +62,4 @@ C:\Users\saent\projects\Social-Media\AuthenticationService\obj\Debug\net5.0\Auth
 C:\Users\saent\Projects\Social-Media\AuthenticationService\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\saent\Projects\Social-Media\AuthenticationService\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\saent\Projects\Social-Media\authenticationservice\bin\Debug\net5.0\appsettings.Production.json
+C:\Users\saent\Projects\Social-Media\authenticationservice\bin\Debug\net5.0\BCrypt.Net-Next.dll

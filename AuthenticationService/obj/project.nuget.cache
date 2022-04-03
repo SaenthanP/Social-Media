@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "rKQalsoxa09nQYUgAHSLaPEaDQZRW/skyO17kpt39goWf9WLrQfvYotyPwz7h3yYpNXu0F6MBiUAlCX3yS05cg==",
+  "dgSpecHash": "bIMEElhwXCGZg4oxrgkyI2SYbOfAi3poopb4LpiE6UYOa2BDgCoNlVj0g8HsBlA1SVNQp1fYKDizEP6S84HOHg==",
   "success": true,
   "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\AuthenticationService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saent\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
+    "C:\\Users\\saent\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",

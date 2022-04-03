@@ -2,7 +2,9 @@ using System;
 using System.Linq;
 using System.Net.Mail;
 using AuthenticationService.Dtos;
+using AuthenticationService.Models;
 using AutoMapper;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace AuthenticationService.Data{
     public class UserRepo : IUserRepo
@@ -15,17 +17,24 @@ namespace AuthenticationService.Data{
             _context=context;
             _mapper=mapper;
         }
-        public ReadUserDto CreateUser(CreateUserDto createUserDto)
+        public void CreateUser(CreateUserDto createUserDto)
         {
             if (createUserDto==null){
                 throw new ArgumentNullException(nameof(createUserDto));
             }
-
-            _context.Add(createUserDto);
-            var userToReturn=_context.User.FirstOrDefault(p=>p.Email==createUserDto.Email);
-
-            return _mapper.Map<ReadUserDto>(userToReturn);
             
+            var user=_mapper.Map<User>(createUserDto);
+            user.Password=BCryptNet.HashPassword(user.Password);
+
+            _context.Add(user);
+        
+            
+        }
+
+        public ReadUserDto GetUserByEmail(string email)
+        {
+            var user=_context.User.FirstOrDefault(p=>p.Email==email);
+            return _mapper.Map<ReadUserDto>(user);
         }
 
         public bool IsEmailExists(string email)

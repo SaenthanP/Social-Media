@@ -1,5 +1,7 @@
+using System;
 using AuthenticationService.Data;
 using AuthenticationService.Dtos;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Controllers{
@@ -7,10 +9,12 @@ namespace AuthenticationService.Controllers{
     [ApiController]
     public class AuthenticationController:ControllerBase{
         private readonly IUserRepo _userRepo;
+        private readonly IMapper _mapper;
 
-        public AuthenticationController(IUserRepo userRepo)
+        public AuthenticationController(IUserRepo userRepo, IMapper mapper)
         {
             _userRepo=userRepo;
+            _mapper=mapper;
         }
 
         [HttpGet]
@@ -18,10 +22,19 @@ namespace AuthenticationService.Controllers{
             return Ok("yes");
         }
 
+        [HttpGet("{email}",Name="GetUserByEmail")]
+        public ActionResult<ReadUserDto> GetUserByEmail(string email){
+            var user=_userRepo.GetUserByEmail(email);
+            if(user==null){
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
         [HttpPost]
         public ActionResult<ReadUserDto> CreateUser(CreateUserDto createUser){
             
-            if(!_userRepo.IsEmailExists(createUser.Email)){
+            if(_userRepo.IsEmailExists(createUser.Email)){
                ModelState.AddModelError("Email","User with this email is already registered");
                
                return BadRequest(ModelState);
@@ -33,7 +46,7 @@ namespace AuthenticationService.Controllers{
                return BadRequest(ModelState);
             }
 
-            if(!_userRepo.IsUsernameExists(createUser.Username)){
+            if(_userRepo.IsUsernameExists(createUser.Username)){
                 ModelState.AddModelError("Username","User with this username is already register");
               
                return BadRequest(ModelState);
@@ -51,9 +64,11 @@ namespace AuthenticationService.Controllers{
                return BadRequest(ModelState);
             }
 
-            var createdUser=_userRepo.CreateUser(createUser);
-            _userRepo.SaveChanges();
-            return Ok(createdUser);
+           _userRepo.CreateUser(createUser);
+           _userRepo.SaveChanges();
+            
+            var userModel=_mapper.Map<ReadUserDto>(_userRepo.GetUserByEmail(createUser.Email));
+            return CreatedAtRoute(nameof(GetUserByEmail),new {email=userModel.Email},userModel);
         }
     }
 }

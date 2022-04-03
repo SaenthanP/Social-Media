@@ -6,6 +6,7 @@ namespace AuthenticationService.Profiles{
         public UserProfile()
         {
             CreateMap<CreateUserDto,User>();
+            CreateMap<User,CreateUserDto>();
             CreateMap<User,ReadUserDto>();
         }
         
