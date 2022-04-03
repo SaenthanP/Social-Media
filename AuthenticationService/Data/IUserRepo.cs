@@ -6,8 +6,8 @@ namespace AuthenticationService.Data{
         bool SaveChanges();
         ReadUserDto CreateUser(CreateUserDto createUserDto);
         bool IsUsernameExists(string username);
-
         bool IsEmailExists(string email);
+        bool IsEmailValid(string email);
     
     }
 }

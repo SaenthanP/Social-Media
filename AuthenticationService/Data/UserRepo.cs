@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net.Mail;
 using AuthenticationService.Dtos;
 using AutoMapper;
 
@@ -35,6 +36,16 @@ namespace AuthenticationService.Data{
                 return false;
             }
             return true;
+        }
+
+        public bool IsEmailValid(string email)
+        {
+            try{
+                MailAddress mailAddress=new MailAddress(email);
+                return true;
+            }catch{
+                return false;
+            }
         }
 
         public bool IsUsernameExists(string username)
