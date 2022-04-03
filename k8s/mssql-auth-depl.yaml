@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mssql-auth
+      app: mssql
   template:
     metadata:
       labels:
-        app: mssql-auth
+        app: mssql
     spec:
       containers:
-        - name: mssql-auth
+        - name: mssql
           image: mcr.microsoft.com/mssql/server:2017-latest
           ports:
             - containerPort: 1433
@@ -29,9 +29,9 @@ spec:
                 key: SA_PASSWORD
           volumeMounts:
           - mountPath: /var/opt/mssql/data
-            name: mssql-auth-db
+            name: mssqldb
       volumes:
-      - name: mssql-auth-db
+      - name: mssqldb
         persistentVolumeClaim:
           claimName: mssql-claim
 ---
@@ -42,9 +42,9 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: mssql-auth
+    app: mssql
   ports:
-  - name: mssql-auth
+  - name: mssql
     protocol: TCP
     port: 1433
     targetPort: 1433
@@ -56,7 +56,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: mssql-auth
+    app: mssql
   ports:
   - protocol: TCP
     port: 1433
