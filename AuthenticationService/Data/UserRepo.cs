@@ -30,7 +30,7 @@ namespace AuthenticationService.Data{
 
         public bool IsEmailExists(string email)
         {
-            var user=_context.User.FirstOrDefault(p=>p.Email==p.Email);
+            var user=_context.User.FirstOrDefault(p=>p.Email==email);
 
             if(user==null){
                 return false;
@@ -50,7 +50,7 @@ namespace AuthenticationService.Data{
 
         public bool IsUsernameExists(string username)
         {
-            var user=_context.User.FirstOrDefault(p=>p.Username==p.Username);
+            var user=_context.User.FirstOrDefault(p=>p.Username==username);
             
             if(user==null){
                 return false;
