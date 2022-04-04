@@ -22,7 +22,6 @@ C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Micr
 C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\saent\projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -63,3 +62,4 @@ C:\Users\saent\Projects\Social-Media\AuthenticationService\bin\Debug\net5.0\Auto
 C:\Users\saent\Projects\Social-Media\AuthenticationService\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\saent\Projects\Social-Media\authenticationservice\bin\Debug\net5.0\appsettings.Production.json
 C:\Users\saent\Projects\Social-Media\authenticationservice\bin\Debug\net5.0\BCrypt.Net-Next.dll
+C:\Users\saent\Projects\Social-Media\authenticationservice\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

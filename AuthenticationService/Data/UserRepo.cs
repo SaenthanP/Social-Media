@@ -71,5 +71,22 @@ namespace AuthenticationService.Data{
         {
             return _context.SaveChanges()>=0;
         }
+
+        public bool IsUserMatch(LoginUserDto loginUserDto)
+        {
+            var user=_context.User.FirstOrDefault(p=>p.Username==loginUserDto.Username);
+
+            if(user==null||!BCryptNet.Verify(loginUserDto.Password,user.Password)){
+                return false;
+            }
+
+            return true;
+            
+        }
+
+        public ReadUserDto GetUserByUsername(string username)
+        {
+            return _mapper.Map<ReadUserDto>(_context.User.FirstOrDefault(p=>p.Username==username));
+        }
     }
 }

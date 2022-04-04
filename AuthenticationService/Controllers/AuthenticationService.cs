@@ -1,6 +1,8 @@
 using System;
 using AuthenticationService.Data;
 using AuthenticationService.Dtos;
+using AuthenticationService.Models;
+using AuthenticationService.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +12,13 @@ namespace AuthenticationService.Controllers{
     public class AuthenticationController:ControllerBase{
         private readonly IUserRepo _userRepo;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public AuthenticationController(IUserRepo userRepo, IMapper mapper)
+        public AuthenticationController(IUserRepo userRepo, IMapper mapper, IJwtService jwtService)
         {
             _userRepo=userRepo;
             _mapper=mapper;
+            _jwtService=jwtService;
         }
 
         [HttpGet]
@@ -29,6 +33,26 @@ namespace AuthenticationService.Controllers{
                 return NotFound();
             }
             return Ok(user);
+        }
+        [HttpPost("{login}")]
+        public ActionResult<User> Login(LoginUserDto loginUserDto){
+            if(string.IsNullOrEmpty(loginUserDto.Username) || string.IsNullOrEmpty(loginUserDto.Password)){
+                 ModelState.AddModelError("Credentials Empty","Please fill out username and password");
+                return Unauthorized(ModelState.Values);
+            }
+
+            if(!_userRepo.IsUserMatch(loginUserDto)){
+                ModelState.AddModelError("Invalid Login","Please check your credentials");
+                return Unauthorized(ModelState.Values);
+            }
+            
+            var user=_userRepo.GetUserByUsername(loginUserDto.Username);
+            var token=_jwtService.IssueToken(user);
+            var output=new {
+                token
+            };            
+
+            return Ok(output);
         }
 
         [HttpPost]
