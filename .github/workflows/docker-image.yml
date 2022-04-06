@@ -20,6 +20,10 @@ jobs:
       run: |
         cd AuthenticationService
         docker build -t saenthan/authenticationservice:latest .
+        cd ..
+        cd EmailService
+        docker build -t saenthan/emailservice:latest .
     - name: Push to Docker Hub
       run: |
         docker push ${{secrets.DOCKER_USERNAME}}/authenticationservice
+        docker push ${{secrets.DOCKER_USERNAME}}/emailservice

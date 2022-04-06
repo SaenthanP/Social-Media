@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emailservice
+  template:
+    metadata:
+      labels:
+        app: emailservice
+    spec:
+      containers:
+      - name: emailservice
+        image: saenthan/emailservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: email-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: emailservice
+  ports:
+  - name: emailservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

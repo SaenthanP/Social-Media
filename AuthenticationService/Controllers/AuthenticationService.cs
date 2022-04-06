@@ -4,6 +4,8 @@ using AuthenticationService.Dtos;
 using AuthenticationService.Models;
 using AuthenticationService.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthenticationService.Controllers{
@@ -21,10 +23,11 @@ namespace AuthenticationService.Controllers{
             _jwtService=jwtService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]        
         [HttpGet]
         public ActionResult Test(){
             return Ok("yes");
-        }
+        } 
 
         [HttpGet("{email}",Name="GetUserByEmail")]
         public ActionResult<ReadUserDto> GetUserByEmail(string email){
