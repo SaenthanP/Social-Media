@@ -22,7 +22,7 @@ namespace EmailService.MessagingClient{
 
             var connection=factory.CreateConnection();
             _channel=connection.CreateModel();
-            //TODO move to const
+            //TODO move to const, test
             _channel.ExchangeDeclare(exchange:"event_bus", type:"direct");
 
             var queueName=_channel.QueueDeclare().QueueName;
