@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\EmailService.csproj": {}
+    "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\EmailService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\EmailService.csproj": {
+    "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\EmailService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\EmailService.csproj",
+        "projectUniqueName": "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\EmailService.csproj",
         "projectName": "EmailService",
-        "projectPath": "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\EmailService.csproj",
+        "projectPath": "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\EmailService.csproj",
         "packagesPath": "C:\\Users\\saent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\obj\\",
+        "outputPath": "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\saent\\AppData\\Roaming\\NuGet\\NuGet.Config"

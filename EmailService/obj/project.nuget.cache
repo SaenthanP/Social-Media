@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pjt8ZM3zBqpGbSqyJFyPU5KZuL1Jga9Ouklp6EioCQeySnNsysrr2CfKtZ48WSDLuvx4SEiTZ2Q5MXmNWX4tzQ==",
+  "dgSpecHash": "5Iy3y5YNlCVORTYYuiJ5TdjITPpthrNFmx7t1uW/bJvVRaSAd+xGC81YBpGaZJvKQ954K01rER8MmJPTbkkpWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\EmailService.csproj",
+  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\EmailService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saent\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

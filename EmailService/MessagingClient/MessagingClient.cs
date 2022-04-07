@@ -16,7 +16,7 @@ namespace EmailService.MessagingClient{
        {
            _configuration=configuration;
             var factory=new ConnectionFactory(){
-                HostName=_configuration.GetSection("RabbitMQHostName").Value,
+                HostName=_configuration.GetSection("RabbitMQHostname").Value,
                 Port=int.Parse(_configuration.GetSection("RabbitMQPort").Value)
             };
 
