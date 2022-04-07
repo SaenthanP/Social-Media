@@ -44,7 +44,7 @@ kind: Service
 metadata:
   name: rabbitmq-loadbalancer
 spec:
-  type: Loadbalancer
+  type: LoadBalancer
   selector:
     app: rabbitmq
   ports:
