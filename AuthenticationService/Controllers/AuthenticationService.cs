@@ -1,6 +1,7 @@
 using System;
 using AuthenticationService.Data;
 using AuthenticationService.Dtos;
+using AuthenticationService.Messaging;
 using AuthenticationService.Models;
 using AuthenticationService.Services;
 using AutoMapper;
@@ -15,12 +16,14 @@ namespace AuthenticationService.Controllers{
         private readonly IUserRepo _userRepo;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
+        private readonly IMessageClient _messageclient;
 
-        public AuthenticationController(IUserRepo userRepo, IMapper mapper, IJwtService jwtService)
+        public AuthenticationController(IUserRepo userRepo, IMapper mapper, IJwtService jwtService,IMessageClient messageClient)
         {
             _userRepo=userRepo;
             _mapper=mapper;
             _jwtService=jwtService;
+            _messageclient=messageClient;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]        
@@ -93,7 +96,7 @@ namespace AuthenticationService.Controllers{
 
            _userRepo.CreateUser(createUser);
            _userRepo.SaveChanges();
-            
+            _messageclient.SendEmail("Testing creating user email");
             var userModel=_mapper.Map<ReadUserDto>(_userRepo.GetUserByEmail(createUser.Email));
             return CreatedAtRoute(nameof(GetUserByEmail),new {email=userModel.Email},userModel);
         }

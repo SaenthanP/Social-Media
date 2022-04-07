@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AuthenticationService.Services;
+using AuthenticationService.Messaging;
 
 namespace AuthenticationService
 {
@@ -39,7 +40,7 @@ namespace AuthenticationService
                     opt.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection")));
             services.AddScoped<IUserRepo,UserRepo>();
             services.AddScoped<IJwtService,JwtService>();
-
+            services.AddScoped<IMessageClient,MessageClient>();
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
