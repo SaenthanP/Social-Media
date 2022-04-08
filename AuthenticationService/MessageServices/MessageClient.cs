@@ -1,9 +1,11 @@
 using System;
 using System.Text;
+using System.Text.Json;
+using AuthenticationService.Dtos;
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 
-namespace AuthenticationService.Messaging{
+namespace AuthenticationService.MessageServices{
     public class MessageClient : IMessageClient
     {
         private readonly IConfiguration _configuration;
@@ -27,9 +29,10 @@ namespace AuthenticationService.Messaging{
             Console.WriteLine("Message bus connection established");
             
         }
-        public void SendEmail(string content)
+        public void SendEmail(MessageUserDto messageUserDto)
         {
-            var body=Encoding.UTF8.GetBytes(content);
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messageUserDto));
+            
             _channel.BasicPublish(exchange:exchange,routingKey:routingKey,basicProperties:null,body:body);
             Console.WriteLine("Email message published from authentication service");
         }

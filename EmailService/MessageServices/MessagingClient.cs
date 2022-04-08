@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using EmailService.EventConstants;
+using EmailService.Models;
+using System.Text.Json;
 
 namespace EmailService.MessageServices{
    public class MessagingClient:BackgroundService{
@@ -27,9 +30,9 @@ namespace EmailService.MessageServices{
             _channel=_connection.CreateModel();
 
             _channel.ExchangeDeclare(exchange:exchange, type:"direct");
+           
             _channel.QueueDeclare(queue,true,false,false,null);
             _channel.QueueBind(queue, exchange, routingKey);
-
              Console.WriteLine("Consuming message bus");
        }
        protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,16 +42,23 @@ namespace EmailService.MessageServices{
             //RHS is subscribed to the  LHS. When LHS is called, RHS is called.
              consumer.Received+=(model,ea)=>{
                  var body=ea.Body.ToArray();
-                 var message=Encoding.UTF8.GetString(body);
-                 Console.WriteLine("message: "+ message);
+                 var jsonMessage=Encoding.UTF8.GetString(body);
+                 var messageUserModel=JsonSerializer.Deserialize<MessageUserModel>(jsonMessage);
+                 Console.WriteLine("message: "+ jsonMessage);
+                 processEvent(messageUserModel);
+                
              };
 
              _channel.BasicConsume(queue:queue,
-                    autoAck:true,
+                    autoAck:false,
                     consumer:consumer
                     );
 
             return Task.CompletedTask;
+        }
+
+        private void processEvent(MessageUserModel messageUserModel){
+            Console.WriteLine("msg processed");
         }
   
    } 

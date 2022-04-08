@@ -29,3 +29,5 @@ C:\Users\saent\Projects\Social-Media\emailservice\obj\Debug\net5.0\EmailService.
 C:\Users\saent\Projects\Social-Media\emailservice\obj\Debug\net5.0\EmailService.genruntimeconfig.cache
 C:\Users\saent\Projects\Social-Media\emailservice\bin\Debug\net5.0\appsettings.Production.json
 C:\Users\saent\Projects\Social-Media\emailservice\bin\Debug\net5.0\RabbitMQ.Client.dll
+C:\Users\saent\Projects\Social-Media\emailservice\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\saent\Projects\Social-Media\emailservice\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -2,14 +2,14 @@ using System;
 using System.Threading.Tasks;
 using AuthenticationService.Data;
 using AuthenticationService.Dtos;
-using AuthenticationService.Messaging;
+using AuthenticationService.MessageServices;
 using AuthenticationService.Models;
 using AuthenticationService.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using AuthenticationService.EventConstants;
 namespace AuthenticationService.Controllers{
     [Route("api/[controller]")]
     [ApiController]
@@ -63,7 +63,7 @@ namespace AuthenticationService.Controllers{
         }
 
         [HttpPost]
-        public async Task<ActionResult<ReadUserDto>> CreateUser(CreateUserDto createUser){
+        public ActionResult<ReadUserDto> CreateUser(CreateUserDto createUser){
             
             if(_userRepo.IsEmailExists(createUser.Email)){
                ModelState.AddModelError("Email","User with this email is already registered");
@@ -95,16 +95,20 @@ namespace AuthenticationService.Controllers{
                return BadRequest(ModelState);
             }
 
-           _userRepo.CreateUser(createUser);
-           _userRepo.SaveChanges();
+            _userRepo.CreateUser(createUser);
+            _userRepo.SaveChanges();
+            var user=_userRepo.GetUserByEmail(createUser.Email);
+            var userReadDto=_mapper.Map<ReadUserDto>(user);
+
            try{
-            _messageclient.SendEmail("Testing creating user email");
+                var userMessageDto=_mapper.Map<MessageUserDto>(userReadDto);
+                userMessageDto.EventType=EmailConstants.EMAIL_ON_REGISRATION;
+                _messageclient.SendEmail(userMessageDto);
 
            }catch(Exception ex){
-
+               Console.WriteLine(ex.Message);
            }
-            var userModel=_mapper.Map<ReadUserDto>(_userRepo.GetUserByEmail(createUser.Email));
-            return CreatedAtRoute(nameof(GetUserByEmail),new {email=userModel.Email},userModel);
+            return CreatedAtRoute(nameof(GetUserByEmail),new {email=userReadDto.Email},userReadDto);
         }
     }
 }

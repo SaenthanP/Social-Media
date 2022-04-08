@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using EmailService.MessageServices;
+using EmailService.Events;
 
 namespace EmailService
 {
@@ -29,7 +30,8 @@ namespace EmailService
         {
 
             services.AddControllers();
-        services.AddHostedService<MessagingClient>();
+            services.AddHostedService<MessagingClient>();
+            services.AddScoped<IEventProcessing,EventProcessing>();
 
             services.AddSwaggerGen(c =>
             {

@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AuthenticationService.Services;
-using AuthenticationService.Messaging;
+using AuthenticationService.MessageServices;
 
 namespace AuthenticationService
 {
