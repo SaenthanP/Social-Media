@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using EmailService.MessageServices;
 
 namespace EmailService
 {
@@ -28,6 +29,8 @@ namespace EmailService
         {
 
             services.AddControllers();
+        services.AddHostedService<MessagingClient>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EmailService", Version = "v1" });

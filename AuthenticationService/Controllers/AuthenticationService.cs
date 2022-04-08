@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AuthenticationService.Data;
 using AuthenticationService.Dtos;
 using AuthenticationService.Messaging;
@@ -62,7 +63,7 @@ namespace AuthenticationService.Controllers{
         }
 
         [HttpPost]
-        public ActionResult<ReadUserDto> CreateUser(CreateUserDto createUser){
+        public async Task<ActionResult<ReadUserDto>> CreateUser(CreateUserDto createUser){
             
             if(_userRepo.IsEmailExists(createUser.Email)){
                ModelState.AddModelError("Email","User with this email is already registered");
@@ -96,7 +97,12 @@ namespace AuthenticationService.Controllers{
 
            _userRepo.CreateUser(createUser);
            _userRepo.SaveChanges();
+           try{
             _messageclient.SendEmail("Testing creating user email");
+
+           }catch(Exception ex){
+
+           }
             var userModel=_mapper.Map<ReadUserDto>(_userRepo.GetUserByEmail(createUser.Email));
             return CreatedAtRoute(nameof(GetUserByEmail),new {email=userModel.Email},userModel);
         }
