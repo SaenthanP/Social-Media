@@ -40,7 +40,7 @@ namespace AuthenticationService
                     opt.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection")));
             services.AddScoped<IUserRepo,UserRepo>();
             services.AddScoped<IJwtService,JwtService>();
-            //services.AddSingleton<IMessageClient,MessageClient>();
+            services.AddSingleton<IMessageClient,MessageClient>();
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
