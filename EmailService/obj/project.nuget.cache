@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+BveaBpaoLL2rk5KdUH9KFecf2zll92IYt9kER8vzz95SgXNm+atOvAee2xJsnA65PSscmpWC8TEIo9lX1tWEQ==",
+  "dgSpecHash": "LKtcLI9l6uhj/VUmPXMwTQRiEusH+XDquPSGGQKoCqnxo8Q2331FXxPu5kpIh2kPUw2xiq9EsB3xPzk+eldHDg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\emailservice\\EmailService.csproj",
+  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\EmailService\\EmailService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saent\\.nuget\\packages\\automapper\\7.0.1\\automapper.7.0.1.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\5.0.1\\automapper.extensions.microsoft.dependencyinjection.5.0.1.nupkg.sha512",

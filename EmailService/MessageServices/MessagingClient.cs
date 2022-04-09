@@ -9,16 +9,20 @@ using RabbitMQ.Client.Events;
 using EmailService.EventConstants;
 using EmailService.Models;
 using System.Text.Json;
+using System.Net.Mail;
+using System.Net;
+using EmailService.Events;
 
 namespace EmailService.MessageServices{
    public class MessagingClient:BackgroundService{
         private readonly IConfiguration _configuration;
         private readonly IConnection _connection;
         private readonly IModel _channel;
+        private readonly IEventProcessing _eventProcessing;
         private const string exchange="event_bus";
         private const string routingKey="email";
         private const string queue="email_queue";
-        public MessagingClient(IConfiguration configuration)
+        public MessagingClient(IConfiguration configuration, IEventProcessing eventProcessing)
        {
            _configuration=configuration;
             var factory=new ConnectionFactory(){
@@ -34,6 +38,7 @@ namespace EmailService.MessageServices{
             _channel.QueueDeclare(queue,true,false,false,null);
             _channel.QueueBind(queue, exchange, routingKey);
              Console.WriteLine("Consuming message bus");
+             _eventProcessing=eventProcessing;
        }
        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {                 
@@ -50,7 +55,7 @@ namespace EmailService.MessageServices{
              };
 
              _channel.BasicConsume(queue:queue,
-                    autoAck:false,
+                    autoAck:true,
                     consumer:consumer
                     );
 
@@ -58,7 +63,11 @@ namespace EmailService.MessageServices{
         }
 
         private void processEvent(MessageUserModel messageUserModel){
-            Console.WriteLine("msg processed");
+            Console.WriteLine(_configuration["test"]);
+            if(messageUserModel.EventType==EmailConstants.EMAIL_ON_REGISRATION){
+                Console.WriteLine("msg processed");
+                _eventProcessing.SendRegistrationEmail(messageUserModel);
+            }
         }
   
    } 

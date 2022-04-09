@@ -31,7 +31,7 @@ namespace EmailService
 
             services.AddControllers();
             services.AddHostedService<MessagingClient>();
-            services.AddScoped<IEventProcessing,EventProcessing>();
+            services.AddSingleton<IEventProcessing,EventProcessing>();
 
             services.AddSwaggerGen(c =>
             {
