@@ -12,7 +12,6 @@ namespace AuthenticationService.MessageServices{
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private const string exchange="event_bus";
-        private const string routingKey="email";
         public MessageClient(IConfiguration configuration)
         {
             _configuration=configuration;
@@ -33,9 +32,16 @@ namespace AuthenticationService.MessageServices{
         {
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messageUserDto));
             
-            _channel.BasicPublish(exchange:exchange,routingKey:routingKey,basicProperties:null,body:body);
+            _channel.BasicPublish(exchange:exchange,routingKey:"email",basicProperties:null,body:body);
             Console.WriteLine("Email message published from authentication service");
         }
 
+        public void CreateUserInNetwork(MessageUserDto messageUserDto)
+        {
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messageUserDto));
+            
+            _channel.BasicPublish(exchange:exchange,routingKey:"create_user",basicProperties:null,body:body);
+            Console.WriteLine("Create User has been published from authentication service");
+        }
     }
 }

@@ -104,7 +104,9 @@ namespace AuthenticationService.Controllers{
                 var userMessageDto=_mapper.Map<MessageUserDto>(userReadDto);
                 userMessageDto.EventType=EmailConstants.EMAIL_ON_REGISRATION;
                 _messageclient.SendEmail(userMessageDto);
-
+                
+                userMessageDto.EventType=PersonalNetworkConstants.CREATE_USER;
+                _messageclient.CreateUserInNetwork(userMessageDto);
            }catch(Exception ex){
                Console.WriteLine(ex.Message);
            }

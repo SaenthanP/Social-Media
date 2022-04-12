@@ -27,3 +27,10 @@ C:\Users\saent\Projects\social-media\PersonalNetworkService\obj\Debug\net5.0\Per
 C:\Users\saent\Projects\social-media\PersonalNetworkService\obj\Debug\net5.0\ref\PersonalNetworkService.dll
 C:\Users\saent\Projects\social-media\PersonalNetworkService\obj\Debug\net5.0\PersonalNetworkService.pdb
 C:\Users\saent\Projects\social-media\PersonalNetworkService\obj\Debug\net5.0\PersonalNetworkService.genruntimeconfig.cache
+C:\Users\saent\Projects\Social-Media\personalnetworkservice\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\saent\Projects\Social-Media\personalnetworkservice\bin\Debug\net5.0\Neo4j.Driver.dll
+C:\Users\saent\Projects\Social-Media\personalnetworkservice\bin\Debug\net5.0\Neo4j.Driver.Simple.dll
+C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\appsettings.Production.json
+C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\RabbitMQ.Client.dll
