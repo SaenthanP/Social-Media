@@ -1,0 +1,13 @@
+neo4j:
+  resources:
+    cpu: "0.5"
+    memory: "2Gi"
+
+
+
+volumes:
+  data:
+    mode: defaultStorageClass
+    defaultStorageClass:
+      requests:
+        storage: 2Gi
