@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-network-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: personalnetworkservice
+  template:
+    metadata:
+      labels:
+        app: personalnetworkservice
+    spec:
+      containers:
+      - name: personalnetworkservice
+        image: saenthan/personalnetworkservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: personal-network-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: personalnetworkservice
+  ports:
+  - name: personalnetworkservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

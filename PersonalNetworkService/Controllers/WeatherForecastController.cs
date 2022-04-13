@@ -9,8 +9,8 @@ using PersonalNetworkService.Services;
 
 namespace PersonalNetworkService.Controllers
 {
+    [Route("test/api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
