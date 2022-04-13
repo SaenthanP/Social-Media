@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BjFDkrrBmSaFQ8nFsMJlh+JEmdTTG2cq/EOUJa5mYPSZx4oDoZ6BFtUPZo9sSrGAyAdhHh78RRB3TuZKRZ60lw==",
+  "dgSpecHash": "F97z/kU94N0CNGJqw1CPROBvljRo8zQtu2xde/ko9QlRdxtH1SllDQl4pZF0ybz1ELJUoPLM+y94CHlnEvSpfg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\PersonalNetworkService\\PersonalNetworkService.csproj",
+  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\personalnetworkservice\\PersonalNetworkService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saent\\.nuget\\packages\\automapper\\7.0.1\\automapper.7.0.1.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\5.0.1\\automapper.extensions.microsoft.dependencyinjection.5.0.1.nupkg.sha512",
