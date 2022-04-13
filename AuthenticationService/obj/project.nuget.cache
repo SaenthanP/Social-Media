@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7gEQm0htMv3PV3omSPbWaf/c8+nQUH9m3o/qLWwQqF236a1DVnJ7V1UUaPYb6qhFHVDLPmqUIwXlUb5mzZ8KMw==",
+  "dgSpecHash": "Kfka77+XcjXxgRIOECsle+J8WNUwYB2C/EbELFw26jez69DkAKRChuwX4RdQIbk5uRH5YTCMmTbpSqSss+5FbQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\AuthenticationService\\AuthenticationService.csproj",
+  "projectFilePath": "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\AuthenticationService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\saent\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\saent\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

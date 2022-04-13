@@ -4,29 +4,35 @@ using Neo4j.Driver;
 using PersonalNetworkService.Models;
 using PersonalNetworkService.Services;
 using System.Threading.Tasks;
+using Neo4jClient;
 
 public class UserNetworkService : IUserNetworkService
 {
     private readonly IConfiguration _configuration;
     private readonly IDriver _driver;
 
-    public UserNetworkService(IConfiguration configuration)
+    public UserNetworkService(IConfiguration configuration,IDriver driver)
     {   
         _configuration=configuration;
-        _driver=GraphDatabase.Driver(_configuration.GetSection("Neo4jHost").Value, AuthTokens.Basic(_configuration.GetSection("Neo4jUsername").Value, _configuration.GetSection("Neo4jPassword").Value));
+        _driver=driver;
     }
-    public void AddUserToNetwork(MessageUserModel messageUserModel)
+    public async Task AddUserToNetwork(MessageUserModel messageUserModel)
     {
-             string message="Test";
-             var session=_driver.Session();
-             var addUser=session.WriteTransaction(tx=>{
-                    var result = tx.Run("CREATE (a:Greeting) " +
-                                    "SET a.message = $message " +
-                                    "RETURN a.message + ', from node ' + id(a)",
-                    new {message});
-             });
-                
-            Console.WriteLine(addUser);
-        throw new System.NotImplementedException();
+        Console.WriteLine("reach");
+        var session=_driver.AsyncSession();
+        var query="Create(u:User {Id: '"+messageUserModel.Id+"', Username: '"+messageUserModel.Username+"', Email: '"+messageUserModel.Email+"'})";
+
+        try{
+            IResultCursor cursor = await session.RunAsync(query);
+            await cursor.ConsumeAsync();
+        }
+
+        finally
+        {
+            await session.CloseAsync();
+        }
+
+        await _driver.CloseAsync();
+
     }
 }

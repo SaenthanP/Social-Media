@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Neo4j.Driver;
+using PersonalNetworkService.Services;
 
 namespace PersonalNetworkService.Controllers
 {
@@ -18,12 +19,13 @@ namespace PersonalNetworkService.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IUserNetworkService _userNetworkService;
         private readonly IDriver _driver;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUserNetworkService userNetworkService)
         {
             _logger = logger;
-            _driver=GraphDatabase.Driver("neo4j://localhost:7687", AuthTokens.Basic("neo4j", "dVpaZyJk21Xt46"));
+            _userNetworkService=userNetworkService;
 
         }
       
@@ -42,19 +44,7 @@ namespace PersonalNetworkService.Controllers
         }
        [HttpGet("{test}")]
        public ActionResult Test(){
-           string message="Test";
-                 using (var session = _driver.Session())
-        {
-            var greeting = session.WriteTransaction(tx =>
-            {
-                var result = tx.Run("CREATE (a:Greeting) " +
-                                    "SET a.message = $message " +
-                                    "RETURN a.message + ', from node ' + id(a)",
-                    new {message});
-                return result.Single()[0].As<string>();
-            });
-            Console.WriteLine(greeting);
-        }
+    
             return Ok("yes");
         } 
 

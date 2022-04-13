@@ -34,3 +34,5 @@ C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\app
 C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\RabbitMQ.Client.dll
+C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\Neo4jClient.dll
+C:\Users\saent\Projects\Social-Media\PersonalNetworkService\bin\Debug\net5.0\Newtonsoft.Json.dll

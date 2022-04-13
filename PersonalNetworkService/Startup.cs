@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using PersonalNetworkService.Events;
+using Neo4j.Driver;
+using PersonalNetworkService.Services;
 
 namespace PersonalNetworkService
 {
@@ -34,7 +36,9 @@ namespace PersonalNetworkService
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddHostedService<MessagingClient>();
+            services.AddSingleton(GraphDatabase.Driver(Configuration.GetSection("Neo4jHost").Value, AuthTokens.Basic(Configuration.GetSection("Neo4jUsername").Value, Configuration.GetSection("Neo4jPassword").Value)));
             services.AddSingleton<IEventProcessing,EventProcessing>();
+            services.AddSingleton<IUserNetworkService,UserNetworkService>();
 
             services.AddSwaggerGen(c =>
             {

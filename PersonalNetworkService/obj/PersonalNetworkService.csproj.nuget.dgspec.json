@@ -46,6 +46,10 @@
               "target": "Package",
               "version": "[4.4.0, )"
             },
+            "Neo4jClient": {
+              "target": "Package",
+              "version": "[4.1.23, )"
+            },
             "RabbitMQ.Client": {
               "target": "Package",
               "version": "[6.2.4, )"
