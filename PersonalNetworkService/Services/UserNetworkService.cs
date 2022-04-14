@@ -35,4 +35,23 @@ public class UserNetworkService : IUserNetworkService
         await _driver.CloseAsync();
 
     }
+
+    public async Task FollowUser(string userId)
+    {
+        var session=_driver.AsyncSession();
+        var query="MATCH (u:User) WHERE u.Id='"+userId+"'";
+
+        try{
+            IResultCursor cursor = await session.RunAsync(query);
+            await cursor.ConsumeAsync();
+        }
+
+        finally
+        {
+            await session.CloseAsync();
+        }
+
+        await _driver.CloseAsync();
+
+    }
 }

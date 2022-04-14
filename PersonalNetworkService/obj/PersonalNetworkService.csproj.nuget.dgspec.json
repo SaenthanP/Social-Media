@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\saent\\Projects\\Social-Media\\personalnetworkservice\\PersonalNetworkService.csproj": {}
+    "C:\\Users\\saent\\Projects\\Social-Media\\PersonalNetworkService\\PersonalNetworkService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\saent\\Projects\\Social-Media\\personalnetworkservice\\PersonalNetworkService.csproj": {
+    "C:\\Users\\saent\\Projects\\Social-Media\\PersonalNetworkService\\PersonalNetworkService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\saent\\Projects\\Social-Media\\personalnetworkservice\\PersonalNetworkService.csproj",
+        "projectUniqueName": "C:\\Users\\saent\\Projects\\Social-Media\\PersonalNetworkService\\PersonalNetworkService.csproj",
         "projectName": "PersonalNetworkService",
-        "projectPath": "C:\\Users\\saent\\Projects\\Social-Media\\personalnetworkservice\\PersonalNetworkService.csproj",
+        "projectPath": "C:\\Users\\saent\\Projects\\Social-Media\\PersonalNetworkService\\PersonalNetworkService.csproj",
         "packagesPath": "C:\\Users\\saent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\saent\\Projects\\Social-Media\\personalnetworkservice\\obj\\",
+        "outputPath": "C:\\Users\\saent\\Projects\\Social-Media\\PersonalNetworkService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\saent\\AppData\\Roaming\\NuGet\\NuGet.Config"

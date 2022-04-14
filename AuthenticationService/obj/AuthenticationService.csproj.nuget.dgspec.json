@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\AuthenticationService.csproj": {}
+    "C:\\Users\\saent\\Projects\\Social-Media\\AuthenticationService\\AuthenticationService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\AuthenticationService.csproj": {
+    "C:\\Users\\saent\\Projects\\Social-Media\\AuthenticationService\\AuthenticationService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\AuthenticationService.csproj",
+        "projectUniqueName": "C:\\Users\\saent\\Projects\\Social-Media\\AuthenticationService\\AuthenticationService.csproj",
         "projectName": "AuthenticationService",
-        "projectPath": "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\AuthenticationService.csproj",
+        "projectPath": "C:\\Users\\saent\\Projects\\Social-Media\\AuthenticationService\\AuthenticationService.csproj",
         "packagesPath": "C:\\Users\\saent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\saent\\Projects\\Social-Media\\authenticationservice\\obj\\",
+        "outputPath": "C:\\Users\\saent\\Projects\\Social-Media\\AuthenticationService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\saent\\AppData\\Roaming\\NuGet\\NuGet.Config"
