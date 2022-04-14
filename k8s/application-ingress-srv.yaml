@@ -4,13 +4,17 @@ metadata:
   name: application-ingress-srv
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-method: GET
+    nginx.ingress.kubernetes.io/auth-url: http://acme.com/api/Authentication
     nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/custom-headers: |
+      proxy_set_header Authorization $Authorization;
 spec:
   rules:
       - host: acme.com
         http:
           paths:
-            - path: /api/network
+            - path: /test/api/WeatherForecast
               pathType: Prefix
               backend: 
                 service:
