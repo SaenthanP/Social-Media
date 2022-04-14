@@ -56,7 +56,9 @@ namespace EmailService.MessageServices{
 
              _channel.BasicConsume(queue:queue,
                     autoAck:true,
-                    consumer:consumer
+                    consumer:consumer,
+                    exclusive:true
+
                     );
 
             return Task.CompletedTask;
