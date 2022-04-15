@@ -29,8 +29,10 @@ namespace AuthenticationService.Controllers{
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]        
         [HttpGet]
-        public ActionResult Test(){
-            return Ok("yes");
+        public ActionResult IsAuthenticated([FromHeader(Name = "Authorization")] string token){
+            HttpContext.Response.Headers.Add("id",_jwtService.GetUserIdFromToken(token));
+            
+            return Ok();
         } 
 
         [HttpGet("{email}",Name="GetUserByEmail")]

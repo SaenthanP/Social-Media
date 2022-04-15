@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using AuthenticationService.Dtos;
@@ -27,6 +28,13 @@ namespace AuthenticationService.Services{
             };
             var token=tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public string GetUserIdFromToken(string token){
+            var jwt=new JwtSecurityToken(token.Substring(7));
+            var id=jwt.Claims.First(c=>c.Type=="id").Value;
+
+            return id;
         }
     }
 }
