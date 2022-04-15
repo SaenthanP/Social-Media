@@ -10,7 +10,6 @@ public class UserNetworkService : IUserNetworkService
 {
     private readonly IConfiguration _configuration;
     private readonly IDriver _driver;
-
     public UserNetworkService(IConfiguration configuration,IDriver driver)
     {   
         _configuration=configuration;
@@ -19,6 +18,7 @@ public class UserNetworkService : IUserNetworkService
     public async Task AddUserToNetwork(MessageUserModel messageUserModel)
     {
         Console.WriteLine("reach");
+        try{
         var session=_driver.AsyncSession();
         var query="Create(u:User {Id: '"+messageUserModel.Id+"', Username: '"+messageUserModel.Username+"', Email: '"+messageUserModel.Email+"'})";
 
@@ -32,7 +32,10 @@ public class UserNetworkService : IUserNetworkService
             await session.CloseAsync();
         }
 
-        await _driver.CloseAsync();
+        // await _driver.CloseAsync();
+        }catch(Exception ex){
+            Console.WriteLine(ex);
+        }
 
     }
 
@@ -51,7 +54,8 @@ public class UserNetworkService : IUserNetworkService
             await session.CloseAsync();
         }
 
-        await _driver.CloseAsync();
+      
 
     }
+
 }
