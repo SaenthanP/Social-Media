@@ -14,7 +14,7 @@ spec:
       - host: acme.com
         http:
           paths:
-            - path: /test/api/WeatherForecast
+            - path: /api/PersonalNetwork
               pathType: Prefix
               backend: 
                 service:

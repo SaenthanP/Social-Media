@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PersonalNetworkService.Services;
 
@@ -12,12 +14,17 @@ namespace PersonalNetworkService.Controllers{
             _userNetworkService=userNetworkService;
         }
         
-        [HttpPost("{userid}")]
-        public ActionResult FollowUser(string userid){
-            _userNetworkService.FollowUser(userid);
+        [HttpPost("follow/{userToFollowId}")]
+        public ActionResult FollowUser(string userToFollowId,[FromHeader(Name = "id")] string userId){
+            _userNetworkService.FollowUser(userToFollowId,userId);
             return Ok("yes");
         } 
+        [HttpPost("isfollowing/{userToCheck}")]
+        public async Task<ActionResult<bool>> IsFollowingUser(string userToCheck,[FromHeader(Name = "id")] string userId){
+            var isFollowing=await _userNetworkService.IsFollowingUser(userToCheck,userId);
 
+            return isFollowing;
+        } 
 
     }
 }

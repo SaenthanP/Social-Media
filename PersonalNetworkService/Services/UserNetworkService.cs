@@ -39,10 +39,10 @@ public class UserNetworkService : IUserNetworkService
 
     }
 
-    public async Task FollowUser(string userId)
+    public async Task FollowUser(string userToFollowId,string userId)
     {
         var session=_driver.AsyncSession();
-        var query="MATCH (u:User) WHERE u.Id='"+userId+"'";
+        var query="MATCH (u1:User),(u2:User) WHERE u1.Id='"+userId+"' AND u2.Id='"+userToFollowId+"' MERGE (u1)-[:`follows`]->(u2)";
 
         try{
             IResultCursor cursor = await session.RunAsync(query);
@@ -54,8 +54,26 @@ public class UserNetworkService : IUserNetworkService
             await session.CloseAsync();
         }
 
-      
-
     }
 
+    public async Task<bool> IsFollowingUser(string userToCheck, string userId)
+    {
+        var session=_driver.AsyncSession();
+        var query="MATCH (u1:User),(u2:User) WHERE u1.Id='"+userId+"' AND u2.Id='"+userToCheck+"' AND (u1)-[:`follows`]->(u2) RETURN u2";
+
+      
+        try{
+            IResultCursor cursor = await session.RunAsync(query);
+            await cursor.FetchAsync();
+            var result=cursor.Current;
+            if(result!=null){
+                return true;
+            }
+            
+        } finally{
+            await session.CloseAsync();
+        }
+
+        return false;
+    }
 }
