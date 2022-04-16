@@ -26,8 +26,12 @@ jobs:
         cd ..
         cd PersonalNetworkService
         docker build -t saenthan/personalnetworkservice:latest .
+        cd ..
+        cd PostService
+        docker build -t saenthan/postservice:latest .
     - name: Push to Docker Hub
       run: |
         docker push ${{secrets.DOCKER_USERNAME}}/authenticationservice
         docker push ${{secrets.DOCKER_USERNAME}}/emailservice
         docker push ${{secrets.DOCKER_USERNAME}}/personalnetworkservice
+        docker push ${{secrets.DOCKER_USERNAME}}/postservice

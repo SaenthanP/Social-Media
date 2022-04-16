@@ -5,6 +5,8 @@ namespace PersonalNetworkService.Services{
     public interface IUserNetworkService{
         Task AddUserToNetwork(MessageUserModel messageUserModel);
         Task FollowUser(string userToFollowId,string userId);
+        Task UnfollowUser(string userToFollowId,string userId);
+
         Task<bool> IsFollowingUser(string userToCheck,string userId);
     }
 }

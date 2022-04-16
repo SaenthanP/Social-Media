@@ -1,0 +1,13 @@
+using AutoMapper;
+using PostService.Dtos;
+using PostService.Models;
+
+namespace PostService.Profiles{
+    public class PostProfile:Profile{
+        public PostProfile()
+        {
+            CreateMap<CreatePostDto,Post>()
+                .ForMember(dest=>dest.PostDateTime,opt=>opt.MapFrom(src=>src.PostDateTime.ToString()));
+        }
+    }
+}

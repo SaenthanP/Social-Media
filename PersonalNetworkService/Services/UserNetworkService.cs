@@ -76,4 +76,20 @@ public class UserNetworkService : IUserNetworkService
 
         return false;
     }
+
+    public async Task UnfollowUser(string userToFollowId, string userId)
+    {
+        var session=_driver.AsyncSession();
+        var query="MATCH (u1:User),(u2:User),(u1)-[r:`follows`]->(u2)  WHERE u1.Id='"+userId+"' AND u2.Id='"+userToFollowId+"' DELETE r";
+
+        try{
+            IResultCursor cursor = await session.RunAsync(query);
+            await cursor.ConsumeAsync();
+        }
+
+        finally
+        {
+            await session.CloseAsync();
+        }
+    }
 }

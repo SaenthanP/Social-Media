@@ -15,11 +15,18 @@ namespace PersonalNetworkService.Controllers{
         }
         
         [HttpPost("follow/{userToFollowId}")]
-        public ActionResult FollowUser(string userToFollowId,[FromHeader(Name = "id")] string userId){
-            _userNetworkService.FollowUser(userToFollowId,userId);
-            return Ok("yes");
+        public async Task<ActionResult> FollowUser(string userToFollowId,[FromHeader(Name = "id")] string userId){
+            await _userNetworkService.FollowUser(userToFollowId,userId);
+            return Ok("followed");
         } 
-        [HttpPost("isfollowing/{userToCheck}")]
+
+        [HttpPost("unfollow/{userToUnfollowId}")]
+        public async Task<ActionResult> UnfollowUser(string userToUnfollowId,[FromHeader(Name = "id")] string userId){
+            await _userNetworkService.UnfollowUser(userToUnfollowId,userId);
+            return Ok("unfollowed");
+        } 
+
+        [HttpGet("isfollowing/{userToCheck}")]
         public async Task<ActionResult<bool>> IsFollowingUser(string userToCheck,[FromHeader(Name = "id")] string userId){
             var isFollowing=await _userNetworkService.IsFollowingUser(userToCheck,userId);
 
