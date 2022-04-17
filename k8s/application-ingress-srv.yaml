@@ -22,3 +22,10 @@ spec:
                   name: personal-network-clusterip-srv
                   port:
                     number: 80
+            - path: /api/Post
+              pathType: Prefix
+              backend: 
+                service:
+                  name: post-clusterip-srv
+                  port:
+                    number: 80
