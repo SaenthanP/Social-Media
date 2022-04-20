@@ -35,3 +35,13 @@ C:\Users\saent\Projects\Social-Media\FeedService\obj\Debug\net5.0\FeedService.dl
 C:\Users\saent\Projects\Social-Media\FeedService\obj\Debug\net5.0\ref\FeedService.dll
 C:\Users\saent\Projects\Social-Media\FeedService\obj\Debug\net5.0\FeedService.pdb
 C:\Users\saent\Projects\Social-Media\FeedService\obj\Debug\net5.0\FeedService.genruntimeconfig.cache
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\RabbitMQ.Client.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Humanizer.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll

@@ -61,3 +61,5 @@ C:\Users\saent\Projects\Social-Media\PostService\obj\Debug\net5.0\PostService.dl
 C:\Users\saent\Projects\Social-Media\PostService\obj\Debug\net5.0\ref\PostService.dll
 C:\Users\saent\Projects\Social-Media\PostService\obj\Debug\net5.0\PostService.pdb
 C:\Users\saent\Projects\Social-Media\PostService\obj\Debug\net5.0\PostService.genruntimeconfig.cache
+C:\Users\saent\Projects\Social-Media\PostService\bin\Debug\net5.0\appsettings.Production.json
+C:\Users\saent\Projects\Social-Media\PostService\bin\Debug\net5.0\RabbitMQ.Client.dll

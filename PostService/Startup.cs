@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PostService.Data;
+using PostService.MessageServices;
 
 namespace PostService
 {
@@ -33,7 +34,7 @@ namespace PostService
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IPostRepo,PostRepo>();
-
+            services.AddScoped<IMessageClient,MessageClient>();
             services.AddDbContext<PostContext>(opt =>
                     opt.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection")));
             services.AddSwaggerGen(c =>

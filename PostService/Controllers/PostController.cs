@@ -1,7 +1,9 @@
 using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Data;
 using PostService.Dtos;
+using PostService.EventConstants;
 using PostService.MessageServices;
 using PostService.Models;
 
@@ -11,11 +13,13 @@ namespace PostService.Controllers{
     public class PostController:ControllerBase{
         private readonly IPostRepo _repo;
         private readonly IMessageClient _messageClient;
+        private readonly IMapper _mapper;
 
-        public PostController(IPostRepo repo,IMessageClient messageClient)
+        public PostController(IPostRepo repo,IMessageClient messageClient,IMapper mapper)
         {
             _repo=repo;
             _messageClient=messageClient;
+            _mapper=mapper;
         }
 
         [HttpPost]
@@ -28,8 +32,13 @@ namespace PostService.Controllers{
             createPostDto.PostDateTime=DateTime.Now;
             createPostDto.UserId=userId;
 
-            var createdPostId=_repo.CreatePost(createPostDto);
-            return CreatedAtRoute(nameof(GetPostById),new {id=createdPostId.Id},createdPostId);
+            var createdPost=_repo.CreatePost(createPostDto);
+
+            var publishPostDto=_mapper.Map<PublishPostDto>(createdPost);
+            publishPostDto.EventType=PostConstants.CREATE_POST;
+            _messageClient.PostCreated(publishPostDto);
+
+            return CreatedAtRoute(nameof(GetPostById),new {id=createdPost.Id},createdPost);
         }
 
         [HttpGet("{id}", Name="GetPostById")]
@@ -46,7 +55,7 @@ namespace PostService.Controllers{
         
         [HttpGet]
         public ActionResult Test(){
-            _messageClient.PostCreated();
+            
             return Ok();
         }
     }

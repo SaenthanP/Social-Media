@@ -13,7 +13,7 @@ using System.Net.Mail;
 using System.Net;
 using PersonalNetworkService.Events;
 
-namespace PersonalNetworkService.MessageServices{
+namespace PersonalNetworkService.MessageServiceConsumer{
    public class MessagingClient:BackgroundService{
         private readonly IConfiguration _configuration;
         private readonly IConnection _connection;
