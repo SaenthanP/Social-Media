@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 
 namespace FeedService.Controllers
 {
@@ -17,23 +18,25 @@ namespace FeedService.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IDatabase _redis;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,IConnectionMultiplexer muxer)
         {
             _logger = logger;
+            _redis=muxer.GetDatabase();
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var setTask = _redis.StringSetAsync("key", "e");
+            var result2=_redis.ListRightPushAsync("key2","e2");
+            var result3=_redis.ListRightPushAsync("key2","e3426");
+
+            // var expireTask = _redis.KeyExpireAsync("key", TimeSpan.FromSeconds(3600));
+            await Task.WhenAll(setTask,result2,result3);
+            return null;
         }
     }
 }

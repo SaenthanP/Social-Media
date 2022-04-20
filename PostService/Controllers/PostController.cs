@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Data;
 using PostService.Dtos;
+using PostService.MessageServices;
 using PostService.Models;
 
 namespace PostService.Controllers{
@@ -9,10 +10,12 @@ namespace PostService.Controllers{
     [ApiController]
     public class PostController:ControllerBase{
         private readonly IPostRepo _repo;
+        private readonly IMessageClient _messageClient;
 
-        public PostController(IPostRepo repo)
+        public PostController(IPostRepo repo,IMessageClient messageClient)
         {
             _repo=repo;
+            _messageClient=messageClient;
         }
 
         [HttpPost]
@@ -38,6 +41,13 @@ namespace PostService.Controllers{
             }
 
             return Ok(post);
+        }
+
+        
+        [HttpGet]
+        public ActionResult Test(){
+            _messageClient.PostCreated();
+            return Ok();
         }
     }
 }
