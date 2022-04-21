@@ -1,5 +1,5 @@
-namespace PersonalNetworkService.Models{
-    public class PublishedFeedDto{
+namespace FeedService.Dtos{
+    public class PublishedNetworkDto{
         public string UserId { get; set; }
         public string Username { get; set; }
 

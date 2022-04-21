@@ -1,5 +1,5 @@
 namespace PersonalNetworkService.Models{
-    public class PublishFeedModel{
+    public class PublishNetworkModel{
         public string UserId { get; set; }
         public string Username { get; set; }
 

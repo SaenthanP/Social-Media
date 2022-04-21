@@ -32,8 +32,11 @@ namespace FeedService.MessageServices{
             _channel=_connection.CreateModel();
 
             _channel.ExchangeDeclare(exchange:exchange,type:"direct");
-            _channel.QueueDeclare(queue,true,false,false,null);
-            _channel.QueueBind(queue,exchange,PostRoutingKey);
+            // _channel.QueueDeclare(queue,true,false,false,null);
+            // _channel.QueueBind(queue,exchange,PostRoutingKey);
+
+            _channel.QueueDeclare("network_queue",true,false,false,null);
+            _channel.QueueBind("network_queue",exchange,NetworkRoutingKey);
             Console.WriteLine("Consuming the message bus");
         }
 
@@ -48,6 +51,7 @@ namespace FeedService.MessageServices{
                 if(ea.RoutingKey==PostRoutingKey){
                     processPostEvent(JsonSerializer.Deserialize<PublishedPostDto>(jsonMessage));
                 }else if(ea.RoutingKey==NetworkRoutingKey){
+                    processNetworkEvent(JsonSerializer.Deserialize<PublishedNetworkDto>(jsonMessage));
                     // processNetworkEvent(Encoding.UTF8.GetString(body));
 
                 }
@@ -55,7 +59,13 @@ namespace FeedService.MessageServices{
                 Console.WriteLine("hit the consumer");
             };
 
-            _channel.BasicConsume(queue:queue,
+            // _channel.BasicConsume(queue:queue,
+            //     autoAck:true,
+            //     consumer:consumer,
+            //     exclusive: true
+            // );
+
+            _channel.BasicConsume(queue:"network_queue",
                 autoAck:true,
                 consumer:consumer,
                 exclusive: true
@@ -64,6 +74,9 @@ namespace FeedService.MessageServices{
         }
         private void processPostEvent(PublishedPostDto publishedPostDto){
             var val=publishedPostDto;
+        }
+          private void processNetworkEvent(PublishedNetworkDto publishedNetworkto){
+           var val=publishedNetworkto;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using PersonalNetworkService.Dtos;
+using PersonalNetworkService.EventConstants;
 using PersonalNetworkService.Models;
 using RabbitMQ.Client;
 
@@ -28,10 +29,11 @@ namespace PersonalNetworkService.MessageServicePublisher{
             _channel=_connection.CreateModel();
             _channel.ExchangeDeclare(exchange:exchange,"direct");
         }
-        public void FollowUser(PublishFeedModel publishFeedModel)
+        public void FollowUser(PublishNetworkModel publishNetworkModel)
         {
-            var body=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(publishFeedModel));
-            _channel.BasicPublish(exchange,"network");
+            publishNetworkModel.EventType=PersonalNetworkConstants.FOLLOW_USER;
+            var body=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(publishNetworkModel));
+            _channel.BasicPublish(exchange,"network",basicProperties:null,body:body);
             Console.WriteLine("Follow user event has been published");
         }
     }

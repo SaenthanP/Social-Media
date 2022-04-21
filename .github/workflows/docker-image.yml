@@ -29,9 +29,13 @@ jobs:
         cd ..
         cd PostService
         docker build -t saenthan/postservice:latest .
+        cd ..
+        cd FeedService
+        docker build -t saenthan/feedservice:latest .
     - name: Push to Docker Hub
       run: |
         docker push ${{secrets.DOCKER_USERNAME}}/authenticationservice
         docker push ${{secrets.DOCKER_USERNAME}}/emailservice
         docker push ${{secrets.DOCKER_USERNAME}}/personalnetworkservice
         docker push ${{secrets.DOCKER_USERNAME}}/postservice
+        docker push ${{secrets.DOCKER_USERNAME}}/feedservice

@@ -32,7 +32,7 @@ namespace PersonalNetworkService.Controllers{
                 var userToFollow=await _userNetworkService.GetUser(userToFollowId);
                 var originalUser=await _userNetworkService.GetUser(userId);
 
-                var publishFeedModel=new PublishFeedModel();
+                var publishFeedModel=new PublishNetworkModel();
                 publishFeedModel.UserId=originalUser.UserId;
                 publishFeedModel.Username=originalUser.Username;
 

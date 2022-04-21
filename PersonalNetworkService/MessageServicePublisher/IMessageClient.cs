@@ -3,6 +3,6 @@ using PersonalNetworkService.Models;
 
 namespace PersonalNetworkService.MessageServicePublisher{
     public interface IMessageClient{
-        void FollowUser(PublishFeedModel publishFeedModel);
+        void FollowUser(PublishNetworkModel publishNetworkModel);
     }
 }
