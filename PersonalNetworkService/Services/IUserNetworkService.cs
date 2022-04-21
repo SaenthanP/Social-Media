@@ -8,5 +8,6 @@ namespace PersonalNetworkService.Services{
         Task UnfollowUser(string userToFollowId,string userId);
 
         Task<bool> IsFollowingUser(string userToCheck,string userId);
+        Task<User> GetUser(string id);
     }
 }
