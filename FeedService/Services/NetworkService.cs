@@ -1,11 +1,11 @@
 using FeedService.Dtos;
 using StackExchange.Redis;
 
-namespace FeedService.Events{
-    public class NetworkEventProcessing:INetworkEventProcessing{
+namespace FeedService.Services{
+    public class NetworkService:INetworkService{
         private readonly IDatabase _redis;
 
-        public NetworkEventProcessing(IConnectionMultiplexer muxer)
+        public NetworkService(IConnectionMultiplexer muxer)
         {
            _redis=muxer.GetDatabase();
         }

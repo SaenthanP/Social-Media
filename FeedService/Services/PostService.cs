@@ -5,25 +5,25 @@ using System.Text.Json;
 using FeedService.Dtos;
 using StackExchange.Redis;
 
-namespace FeedService.Events{
-    public class PostEventProcessing : IPostEventProcessing
+namespace FeedService.Services{
+    public class PostService : IPostService
     {
         private readonly IDatabase _redis;
-        private readonly INetworkEventProcessing _networkEventProcessing;
+        private readonly INetworkService _networkService;
 
-        public PostEventProcessing(IConnectionMultiplexer muxer,INetworkEventProcessing networkEventProcessing )
+        public PostService(IConnectionMultiplexer muxer,INetworkService networkService )
         {
             _redis=muxer.GetDatabase();
-            _networkEventProcessing=networkEventProcessing;
+            _networkService=networkService;
         }
         public void AddPostToFeed(PublishedPostDto publishedPostDto)
         {
-            _redis.ListRightPush(publishedPostDto.UserId+"Home Feed",publishedPostDto.PostId);
+            _redis.ListRightPush(publishedPostDto.UserId+"User Feed",publishedPostDto.PostId);
             
-            var followerList=_networkEventProcessing.GetFollowListByUserId(publishedPostDto.UserId);
+            var followerList=_networkService.GetFollowListByUserId(publishedPostDto.UserId);
 
             foreach(var userId in followerList){
-                _redis.ListRightPush((string)userId+"User Feed",publishedPostDto.PostId);
+                _redis.ListRightPush((string)userId+"Home Feed",publishedPostDto.PostId);
             }
 
             _redis.StringSet(publishedPostDto.PostId,Encoding.UTF8.GetBytes(JsonSerializer.Serialize(publishedPostDto)));
@@ -34,9 +34,22 @@ namespace FeedService.Events{
             var postList=_redis.ListRange(userId+"Home Feed");
             if(postList!=null){
                 IEnumerable<PublishedPostDto> homeFeed=postList.Select(u=>JsonSerializer.Deserialize<PublishedPostDto>(Encoding.UTF8.GetString(_redis.StringGet((string)u))));
+
                 return homeFeed;
             }
-            
+
+            return null;
+        }
+
+        public IEnumerable<PublishedPostDto> GetUserFeedByUserId(string userId)
+        {
+            var postList=_redis.ListRange(userId+"User Feed");
+            if(postList!=null){
+                IEnumerable<PublishedPostDto> userFeed=postList.Select(u=>JsonSerializer.Deserialize<PublishedPostDto>(Encoding.UTF8.GetString(_redis.StringGet((string)u))));
+
+                return userFeed;
+            }
+
             return null;
         }
     }

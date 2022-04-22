@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using FeedService.Dtos;
+using FeedService.EventConstants;
 using FeedService.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -13,8 +14,7 @@ using RabbitMQ.Client.Events;
 namespace FeedService.MessageServices{
     public class MessageClient:BackgroundService{
         private readonly IConfiguration _configuration;
-        private readonly INetworkEventProcessing _networkEventProcessing;
-        private readonly IPostEventProcessing _postEventProcessing;
+        private readonly IEventProcessing _eventProcessing;
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private const string POST_ROUTING_KEY="post";
@@ -23,11 +23,10 @@ namespace FeedService.MessageServices{
         private const string NETWORK_QUEUE="network_queue";
         private const string EXCHANGE="event_bus";
 
-        public MessageClient(IConfiguration configuration,INetworkEventProcessing networkEventProcessing,IPostEventProcessing postEventProcessing)
+        public MessageClient(IConfiguration configuration,IEventProcessing eventProcessing)
         {
             _configuration=configuration;
-            _networkEventProcessing=networkEventProcessing;
-            _postEventProcessing=postEventProcessing;
+            _eventProcessing=eventProcessing;
 
             var factory=new ConnectionFactory(){
                 HostName=_configuration.GetSection("RabbitMQHostname").Value,
@@ -77,11 +76,21 @@ namespace FeedService.MessageServices{
             return Task.CompletedTask;
         }
         private void processPostEvent(PublishedPostDto publishedPostDto){
-            var val=publishedPostDto;
-            _postEventProcessing.AddPostToFeed(publishedPostDto);
+
+            switch(publishedPostDto.EventType){
+                case PostConstants.CREATE_POST:
+                    _eventProcessing.AddPostToCache(publishedPostDto);
+                    break;
+            }
+            
         }
-          private void processNetworkEvent(PublishedNetworkDto publishedNetworkDto){
-           _networkEventProcessing.AddFollowToCache(publishedNetworkDto);
+        private void processNetworkEvent(PublishedNetworkDto publishedNetworkDto){
+            switch(publishedNetworkDto.EventType){
+                case NetworkConstants.FOLLOW_USER:
+                    _eventProcessing.AddFollowToCache(publishedNetworkDto);
+                    break;
+            }
+           
         }
     }
 }

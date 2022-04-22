@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using FeedService.Dtos;
 
-namespace FeedService.Events{
-    public interface IPostEventProcessing{
+namespace FeedService.Services{
+    public interface IPostService{
         void AddPostToFeed(PublishedPostDto publishedPostDto);
         IEnumerable<PublishedPostDto> GetHomeFeedByUserId(string userId);
+        IEnumerable<PublishedPostDto> GetUserFeedByUserId(string userId);
     }
 }
