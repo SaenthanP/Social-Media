@@ -19,9 +19,9 @@ namespace EmailService.MessageServices{
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly IEventProcessing _eventProcessing;
-        private const string exchange="event_bus";
-        private const string routingKey="email";
-        private const string queue="email_queue";
+        private const string EXCHANGE="event_bus";
+        private const string ROUTING_KEY="email";
+        private const string EMAIL_QUEUE="email_queue";
         public MessagingClient(IConfiguration configuration, IEventProcessing eventProcessing)
        {
            _configuration=configuration;
@@ -33,10 +33,10 @@ namespace EmailService.MessageServices{
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
 
-            _channel.ExchangeDeclare(exchange:exchange, type:"direct");
+            _channel.ExchangeDeclare(exchange:EXCHANGE, type:"direct");
            
-            _channel.QueueDeclare(queue,true,false,false,null);
-            _channel.QueueBind(queue, exchange, routingKey);
+            _channel.QueueDeclare(EMAIL_QUEUE,true,false,false,null);
+            _channel.QueueBind(EMAIL_QUEUE, EXCHANGE, ROUTING_KEY);
              Console.WriteLine("Consuming message bus");
              _eventProcessing=eventProcessing;
        }
@@ -54,11 +54,10 @@ namespace EmailService.MessageServices{
                 
              };
 
-             _channel.BasicConsume(queue:queue,
+             _channel.BasicConsume(queue:EMAIL_QUEUE,
                     autoAck:true,
                     consumer:consumer,
                     exclusive:true
-
                     );
 
             return Task.CompletedTask;

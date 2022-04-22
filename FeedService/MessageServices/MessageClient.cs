@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using FeedService.Dtos;
+using FeedService.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -12,16 +13,21 @@ using RabbitMQ.Client.Events;
 namespace FeedService.MessageServices{
     public class MessageClient:BackgroundService{
         private readonly IConfiguration _configuration;
+        private readonly INetworkEventProcessing _networkEventProcessing;
+        private readonly IPostEventProcessing _postEventProcessing;
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private const string PostRoutingKey="post";
-        private const string NetworkRoutingKey="network";
-        private const string queue="post_queue";
-        private const string exchange="event_bus";
+        private const string POST_ROUTING_KEY="post";
+        private const string NETWORK_ROUTING_KEY="network";
+        private const string POST_QUEUE="post_queue";
+        private const string NETWORK_QUEUE="network_queue";
+        private const string EXCHANGE="event_bus";
 
-        public MessageClient(IConfiguration configuration)
+        public MessageClient(IConfiguration configuration,INetworkEventProcessing networkEventProcessing,IPostEventProcessing postEventProcessing)
         {
             _configuration=configuration;
+            _networkEventProcessing=networkEventProcessing;
+            _postEventProcessing=postEventProcessing;
 
             var factory=new ConnectionFactory(){
                 HostName=_configuration.GetSection("RabbitMQHostname").Value,
@@ -31,12 +37,12 @@ namespace FeedService.MessageServices{
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
 
-            _channel.ExchangeDeclare(exchange:exchange,type:"direct");
-            // _channel.QueueDeclare(queue,true,false,false,null);
-            // _channel.QueueBind(queue,exchange,PostRoutingKey);
+            _channel.ExchangeDeclare(exchange:EXCHANGE,type:"direct");
+            _channel.QueueDeclare(POST_QUEUE,true,false,false,null);
+            _channel.QueueBind(POST_QUEUE,EXCHANGE,POST_ROUTING_KEY);
 
-            _channel.QueueDeclare("network_queue",true,false,false,null);
-            _channel.QueueBind("network_queue",exchange,NetworkRoutingKey);
+            _channel.QueueDeclare(NETWORK_QUEUE,true,false,false,null);
+            _channel.QueueBind(NETWORK_QUEUE,EXCHANGE,NETWORK_ROUTING_KEY);
             Console.WriteLine("Consuming the message bus");
         }
 
@@ -48,24 +54,22 @@ namespace FeedService.MessageServices{
                 var body=ea.Body.ToArray();
                 var jsonMessage=Encoding.UTF8.GetString(body);
 
-                if(ea.RoutingKey==PostRoutingKey){
+                if(ea.RoutingKey==POST_ROUTING_KEY){
                     processPostEvent(JsonSerializer.Deserialize<PublishedPostDto>(jsonMessage));
-                }else if(ea.RoutingKey==NetworkRoutingKey){
+                }else if(ea.RoutingKey==NETWORK_ROUTING_KEY){
                     processNetworkEvent(JsonSerializer.Deserialize<PublishedNetworkDto>(jsonMessage));
-                    // processNetworkEvent(Encoding.UTF8.GetString(body));
-
                 }
               
                 Console.WriteLine("hit the consumer");
             };
 
-            // _channel.BasicConsume(queue:queue,
-            //     autoAck:true,
-            //     consumer:consumer,
-            //     exclusive: true
-            // );
+            _channel.BasicConsume(queue:POST_QUEUE,
+                autoAck:true,
+                consumer:consumer,
+                exclusive: true
+            );
 
-            _channel.BasicConsume(queue:"network_queue",
+            _channel.BasicConsume(queue:NETWORK_QUEUE,
                 autoAck:true,
                 consumer:consumer,
                 exclusive: true
@@ -74,9 +78,10 @@ namespace FeedService.MessageServices{
         }
         private void processPostEvent(PublishedPostDto publishedPostDto){
             var val=publishedPostDto;
+            _postEventProcessing.AddPostToFeed(publishedPostDto);
         }
-          private void processNetworkEvent(PublishedNetworkDto publishedNetworkto){
-           var val=publishedNetworkto;
+          private void processNetworkEvent(PublishedNetworkDto publishedNetworkDto){
+           _networkEventProcessing.AddFollowToCache(publishedNetworkDto);
         }
     }
 }

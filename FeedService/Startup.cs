@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FeedService.Events;
 using FeedService.MessageServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,8 @@ namespace FeedService
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString("RedisConnection")));
             services.AddHostedService<MessageClient>();
+            services.AddSingleton<INetworkEventProcessing,NetworkEventProcessing>();
+            services.AddSingleton<IPostEventProcessing,PostEventProcessing>();
             // services.AddHttpClient();
             services.AddSwaggerGen(c =>
             {

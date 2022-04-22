@@ -36,8 +36,8 @@ namespace PersonalNetworkService.Controllers{
                 publishFeedModel.UserId=originalUser.UserId;
                 publishFeedModel.Username=originalUser.Username;
 
-                publishFeedModel.UserToFollowId=originalUser.UserId;
-                publishFeedModel.UserToFollowName=originalUser.Username;
+                publishFeedModel.UserToFollowId=userToFollow.UserId;
+                publishFeedModel.UserToFollowName=userToFollow.Username;
 
                 _messageClient.FollowUser(publishFeedModel);
             }

@@ -36,6 +36,9 @@ namespace FeedService.Controllers
 
             // var expireTask = _redis.KeyExpireAsync("key", TimeSpan.FromSeconds(3600));
             await Task.WhenAll(setTask,result2,result3);
+            var result = await _redis.ListRangeAsync("key2");
+            
+            
             return null;
         }
     }

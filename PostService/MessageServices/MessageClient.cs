@@ -11,7 +11,7 @@ namespace PostService.MessageServices{
         private readonly IConfiguration _configuration;
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private const string exchange="event_bus";
+        private const string EXCHANGE="event_bus";
 
         public MessageClient(IConfiguration Configuration)
         {
@@ -23,13 +23,13 @@ namespace PostService.MessageServices{
             
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
-            _channel.ExchangeDeclare(exchange:exchange,"direct");
+            _channel.ExchangeDeclare(exchange:EXCHANGE,"direct");
 
         }
         public void PostCreated(PublishPostDto publishPostDto)
         {
             var body=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(publishPostDto));
-            _channel.BasicPublish(exchange,routingKey:"post",basicProperties:null,body:body);
+            _channel.BasicPublish(EXCHANGE,routingKey:"post",basicProperties:null,body:body);
             Console.WriteLine("Post created");
         }
     }

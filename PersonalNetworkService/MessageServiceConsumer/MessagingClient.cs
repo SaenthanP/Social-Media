@@ -19,8 +19,8 @@ namespace PersonalNetworkService.MessageServiceConsumer{
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly IEventProcessing _eventProcessing;
-        private const string exchange="event_bus";
-        private const string queue="add_to_network_queue";
+        private const string EXCHANGE="event_bus";
+        private const string ADD_TO_NETWORK_QUEUE="add_to_network_queue";
         public MessagingClient(IConfiguration configuration, IEventProcessing eventProcessing)
        {
            _configuration=configuration;
@@ -32,10 +32,10 @@ namespace PersonalNetworkService.MessageServiceConsumer{
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
 
-            _channel.ExchangeDeclare(exchange:exchange, type:"direct");
+            _channel.ExchangeDeclare(exchange:EXCHANGE, type:"direct");
            
-            _channel.QueueDeclare(queue,true,false,false,null);
-            _channel.QueueBind(queue, exchange, "create_user");
+            _channel.QueueDeclare(ADD_TO_NETWORK_QUEUE,true,false,false,null);
+            _channel.QueueBind(ADD_TO_NETWORK_QUEUE, EXCHANGE, "create_user");
              Console.WriteLine("Consuming message bus");
              _eventProcessing=eventProcessing;
        }
@@ -53,7 +53,7 @@ namespace PersonalNetworkService.MessageServiceConsumer{
                 
              };
 
-             _channel.BasicConsume(queue:queue,
+             _channel.BasicConsume(queue:ADD_TO_NETWORK_QUEUE,
                     autoAck:true,
                     consumer:consumer
                     );

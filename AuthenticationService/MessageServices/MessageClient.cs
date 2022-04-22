@@ -11,7 +11,7 @@ namespace AuthenticationService.MessageServices{
         private readonly IConfiguration _configuration;
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private const string exchange="event_bus";
+        private const string EXCHANGE="event_bus";
         public MessageClient(IConfiguration configuration)
         {
             _configuration=configuration;
@@ -23,7 +23,7 @@ namespace AuthenticationService.MessageServices{
         
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
-            _channel.ExchangeDeclare(exchange:exchange, type:"direct");
+            _channel.ExchangeDeclare(exchange:EXCHANGE, type:"direct");
 
             Console.WriteLine("Message bus connection established");
             
@@ -32,7 +32,7 @@ namespace AuthenticationService.MessageServices{
         {
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messageUserDto));
             
-            _channel.BasicPublish(exchange:exchange,routingKey:"email",basicProperties:null,body:body);
+            _channel.BasicPublish(exchange:EXCHANGE,routingKey:"email",basicProperties:null,body:body);
             Console.WriteLine("Email message published from authentication service");
         }
 
@@ -40,7 +40,7 @@ namespace AuthenticationService.MessageServices{
         {
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(messageUserDto));
             
-            _channel.BasicPublish(exchange:exchange,routingKey:"create_user",basicProperties:null,body:body);
+            _channel.BasicPublish(exchange:EXCHANGE,routingKey:"create_user",basicProperties:null,body:body);
             Console.WriteLine("Create User has been published from authentication service");
         }
     }
