@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using FeedService.Dtos;
+using FeedService.Models;
 
 namespace FeedService.Services{
     public interface IPostService{
-        void AddPostToFeed(PublishedPostDto publishedPostDto);
-        IEnumerable<PublishedPostDto> GetHomeFeedByUserId(string userId);
-        IEnumerable<PublishedPostDto> GetUserFeedByUserId(string userId);
+        void AddPostToFeed(PublishedPostModel publishedPostModel);
+        IEnumerable<PublishedPostModel> GetHomeFeedByUserId(string userId);
+        IEnumerable<PublishedPostModel> GetUserFeedByUserId(string userId);
         void ReBuildHomeFeed(string userId);
     }
 }

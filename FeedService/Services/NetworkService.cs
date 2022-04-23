@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FeedService.Dtos;
+using FeedService.Models;
+using FeedService.EventConstants;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
@@ -13,23 +14,29 @@ namespace FeedService.Services{
         {
            _redis=muxer.GetDatabase();
         }
-        public void AddFollowToCache(PublishedNetworkDto publishedNetworkDto)
+        public void AddFollowToCache(PublishedNetworkModel publishedNetworkModel)
         {
-            _redis.ListRightPush(publishedNetworkDto.UserToFollowId+"Follower List",publishedNetworkDto.UserId);
-            _redis.ListRightPush(publishedNetworkDto.UserId+"Following List",publishedNetworkDto.UserToFollowId);
+            _redis.ListRightPush(publishedNetworkModel.UserToInteractWithId+NetworkConstants.FOLLOWER_LIST,publishedNetworkModel.UserId);
+            _redis.ListRightPush(publishedNetworkModel.UserId+NetworkConstants.FOLLOWING_LIST,publishedNetworkModel.UserToInteractWithId);
 
         }
 
         public IEnumerable<string> GetFollowingListByUserId(string userId)
         {
-            var followingList=_redis.ListRange(userId+"Following List").Select(u=>(string)u);
+            var followingList=_redis.ListRange(userId+NetworkConstants.FOLLOWING_LIST).Select(u=>(string)u);
             return followingList;
         }
 
-        IEnumerable<string> INetworkService.GetFollowerListByUserId(string userId)
+        public IEnumerable<string> GetFollowerListByUserId(string userId)
         {
-            var followerList=_redis.ListRange(userId+"Follower List").Select(u=>(string)u);
+            var followerList=_redis.ListRange(userId+NetworkConstants.FOLLOWER_LIST).Select(u=>(string)u);
             return followerList;
+        }
+
+        public void RemoveFollowFromCache(PublishedNetworkModel publishedNetworkModel)
+        {
+            _redis.ListRemove(publishedNetworkModel.UserToInteractWithId+NetworkConstants.FOLLOWER_LIST,publishedNetworkModel.UserId);
+            _redis.ListRemove(publishedNetworkModel.UserId+NetworkConstants.FOLLOWING_LIST,publishedNetworkModel.UserToInteractWithId);
         }
     }
 }

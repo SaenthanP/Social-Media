@@ -2,7 +2,6 @@ using System;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
-using PersonalNetworkService.Dtos;
 using PersonalNetworkService.EventConstants;
 using PersonalNetworkService.Models;
 using RabbitMQ.Client;
@@ -14,7 +13,8 @@ namespace PersonalNetworkService.MessageServicePublisher{
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        private const string exchange="event_bus";
+        private const string EXCHANGE="event_bus";
+        private const string ROUTING_KEY="network";
  
         public MessageClient(IConfiguration configuration)
         {
@@ -27,14 +27,24 @@ namespace PersonalNetworkService.MessageServicePublisher{
 
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
-            _channel.ExchangeDeclare(exchange:exchange,"direct");
+            _channel.ExchangeDeclare(exchange:EXCHANGE,"direct");
         }
         public void FollowUser(PublishNetworkModel publishNetworkModel)
         {
             publishNetworkModel.EventType=PersonalNetworkConstants.FOLLOW_USER;
-            var body=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(publishNetworkModel));
-            _channel.BasicPublish(exchange,"network",basicProperties:null,body:body);
+            PublishEvent(publishNetworkModel);
             Console.WriteLine("Follow user event has been published");
+        }
+
+        public void UnfollowUser(PublishNetworkModel publishNetworkModel)
+        {
+            publishNetworkModel.EventType=PersonalNetworkConstants.UNFOLLOW_USER;
+            PublishEvent(publishNetworkModel);
+            Console.WriteLine("Unfollow user event has been published");
+        }
+        private void PublishEvent(PublishNetworkModel publishNetworkModel){
+            var body=Encoding.UTF8.GetBytes(JsonSerializer.Serialize(publishNetworkModel));
+            _channel.BasicPublish(EXCHANGE,ROUTING_KEY,basicProperties:null,body:body);
         }
     }
 }

@@ -27,6 +27,7 @@ namespace PersonalNetworkService.Controllers{
             }
 
             await _userNetworkService.FollowUser(userToFollowId,userId);
+
             isFollowing=await _userNetworkService.IsFollowingUser(userToFollowId,userId);
             if(isFollowing){
                 var userToFollow=await _userNetworkService.GetUser(userToFollowId);
@@ -36,25 +37,49 @@ namespace PersonalNetworkService.Controllers{
                 publishFeedModel.UserId=originalUser.UserId;
                 publishFeedModel.Username=originalUser.Username;
 
-                publishFeedModel.UserToFollowId=userToFollow.UserId;
-                publishFeedModel.UserToFollowName=userToFollow.Username;
+                publishFeedModel.UserToInteractWithId=userToFollow.UserId;
+                publishFeedModel.UserToInteractWithName=userToFollow.Username;
 
                 _messageClient.FollowUser(publishFeedModel);
+                return Ok("Followed user");
             }
 
-            return Ok();
+            return Problem("Was not able to follow user");
         } 
 
         [HttpPost("unfollow/{userToUnfollowId}")]
         public async Task<ActionResult> UnfollowUser(string userToUnfollowId,[FromHeader(Name = "id")] string userId){
+            var isFollowing=await _userNetworkService.IsFollowingUser(userToUnfollowId,userId);
+
+            if(!isFollowing){
+                return Conflict("Already not following user");
+            }
+
             await _userNetworkService.UnfollowUser(userToUnfollowId,userId);
 
-            return Ok("unfollowed");
+            isFollowing=await _userNetworkService.IsFollowingUser(userToUnfollowId,userId);
+            if(!isFollowing){
+                var userToUnfollow=await _userNetworkService.GetUser(userToUnfollowId);
+                var originalUser=await _userNetworkService.GetUser(userId);
+
+                var publishFeedModel=new PublishNetworkModel();
+                publishFeedModel.UserId=originalUser.UserId;
+                publishFeedModel.Username=originalUser.Username;
+
+                publishFeedModel.UserToInteractWithId=userToUnfollow.UserId;
+                publishFeedModel.UserToInteractWithName=userToUnfollow.Username;
+
+                _messageClient.UnfollowUser(publishFeedModel);
+                
+                return Ok("UnFollowed user");
+            }
+
+            return Problem("Was not able to Unfollow user");
         } 
 
-        [HttpGet("isfollowing/{userToCheck}")]
-        public async Task<ActionResult<bool>> IsFollowingUser(string userToCheck,[FromHeader(Name = "id")] string userId){
-            var isFollowing=await _userNetworkService.IsFollowingUser(userToCheck,userId);
+        [HttpGet("isfollowing/{userToCheckId}")]
+        public async Task<ActionResult<bool>> IsFollowingUser(string userToCheckId,[FromHeader(Name = "id")] string userId){
+            var isFollowing=await _userNetworkService.IsFollowingUser(userToCheckId,userId);
 
             return isFollowing;
         } 

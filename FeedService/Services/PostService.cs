@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using FeedService.Dtos;
+using FeedService.Models;
+using FeedService.EventConstants;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
@@ -18,23 +19,23 @@ namespace FeedService.Services{
             _redis=muxer.GetDatabase();
             _networkService=networkService;
         }
-        public void AddPostToFeed(PublishedPostDto publishedPostDto)
+        public void AddPostToFeed(PublishedPostModel publishedPostModel)
         {
-            _redis.ListLeftPush(publishedPostDto.UserId+"User Feed",publishedPostDto.PostId);
+            _redis.ListLeftPush(publishedPostModel.UserId+PostConstants.USER_FEED,publishedPostModel.PostId);
             
-            var followerList=_networkService.GetFollowerListByUserId(publishedPostDto.UserId);
+            var followerList=_networkService.GetFollowerListByUserId(publishedPostModel.UserId);
 
             foreach(var userId in followerList){
-                _redis.ListLeftPush(userId+"Home Feed",publishedPostDto.PostId);
+                _redis.ListLeftPush(userId+PostConstants.HOME_FEED,publishedPostModel.PostId);
             }
 
-            _redis.StringSet(publishedPostDto.PostId,Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(publishedPostDto)));
+            _redis.StringSet(publishedPostModel.PostId,Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(publishedPostModel)));
         }
-        private IEnumerable<PublishedPostDto> GetFeedFromRedisList(RedisValue[] postList){
+        private IEnumerable<PublishedPostModel> GetFeedFromRedisList(RedisValue[] postList){
             if(postList!=null){
-                IEnumerable<PublishedPostDto> userFeed=Enumerable.Empty<PublishedPostDto>();
-                foreach(var post in postList){
-                    userFeed=userFeed.Append(JsonConvert.DeserializeObject<PublishedPostDto>(Encoding.UTF8.GetString(_redis.StringGet((string)post))));
+                IEnumerable<PublishedPostModel> userFeed=Enumerable.Empty<PublishedPostModel>();
+                foreach(var postId in postList){
+                    userFeed=userFeed.Append(JsonConvert.DeserializeObject<PublishedPostModel>(Encoding.UTF8.GetString(_redis.StringGet((string)postId))));
                 }
             
                 return userFeed;
@@ -43,17 +44,17 @@ namespace FeedService.Services{
             return null;
         }
 
-        public IEnumerable<PublishedPostDto> GetHomeFeedByUserId(string userId)
+        public IEnumerable<PublishedPostModel> GetHomeFeedByUserId(string userId)
         {
-            var postList=_redis.ListRange(userId+"Home Feed");
+            var postList=_redis.ListRange(userId+PostConstants.HOME_FEED);
 
             var homeFeed=GetFeedFromRedisList(postList);
             return homeFeed;
         }
 
-        public IEnumerable<PublishedPostDto> GetUserFeedByUserId(string userId)
+        public IEnumerable<PublishedPostModel> GetUserFeedByUserId(string userId)
         {
-            var postList=_redis.ListRange(userId+"User Feed");
+            var postList=_redis.ListRange(userId+PostConstants.USER_FEED);
             
             var userFeed=GetFeedFromRedisList(postList);
             return userFeed;
@@ -64,7 +65,7 @@ namespace FeedService.Services{
             /*
             Grabs all the posts for the following list, sort by the posted date, and replace the feed in the cache
             */
-            IEnumerable<PublishedPostDto> newFeed=Enumerable.Empty<PublishedPostDto>();
+            IEnumerable<PublishedPostModel> newFeed=Enumerable.Empty<PublishedPostModel>();
             var followingList=_networkService.GetFollowingListByUserId(userId);
 
             foreach(var following in followingList){
@@ -72,10 +73,10 @@ namespace FeedService.Services{
             }
 
             newFeed=newFeed.OrderBy(p=>p.PostDateTime);
-            _redis.KeyDelete(userId+"Home Feed");
+            _redis.KeyDelete(userId+PostConstants.HOME_FEED);
 
             foreach(var post in newFeed){
-                _redis.ListLeftPush(userId+"Home Feed",post.PostId);
+                _redis.ListLeftPush(userId+PostConstants.HOME_FEED,post.PostId);
             }
     
         }

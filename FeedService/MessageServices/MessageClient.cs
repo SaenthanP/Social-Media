@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FeedService.Dtos;
+using FeedService.Models;
 using FeedService.EventConstants;
 using FeedService.Events;
 using Microsoft.Extensions.Configuration;
@@ -55,9 +55,9 @@ namespace FeedService.MessageServices{
                 var jsonMessage=Encoding.UTF8.GetString(body);
 
                 if(ea.RoutingKey==POST_ROUTING_KEY){
-                    processPostEvent( JsonConvert.DeserializeObject<PublishedPostDto>(jsonMessage));
+                    processPostEvent(JsonConvert.DeserializeObject<PublishedPostModel>(jsonMessage));
                 }else if(ea.RoutingKey==NETWORK_ROUTING_KEY){
-                    processNetworkEvent(JsonConvert.DeserializeObject<PublishedNetworkDto>(jsonMessage));
+                    processNetworkEvent(JsonConvert.DeserializeObject<PublishedNetworkModel>(jsonMessage));
                 }
               
                 Console.WriteLine("hit the consumer");
@@ -76,19 +76,22 @@ namespace FeedService.MessageServices{
             );
             return Task.CompletedTask;
         }
-        private void processPostEvent(PublishedPostDto publishedPostDto){
+        private void processPostEvent(PublishedPostModel publishedPostModel){
 
-            switch(publishedPostDto.EventType){
+            switch(publishedPostModel.EventType){
                 case PostConstants.CREATE_POST:
-                    _eventProcessing.AddPostToCache(publishedPostDto);
+                    _eventProcessing.AddPostToCache(publishedPostModel);
                     break;
             }
             
         }
-        private void processNetworkEvent(PublishedNetworkDto publishedNetworkDto){
-            switch(publishedNetworkDto.EventType){
+        private void processNetworkEvent(PublishedNetworkModel publishedNetworkModel){
+            switch(publishedNetworkModel.EventType){
                 case NetworkConstants.FOLLOW_USER:
-                    _eventProcessing.AddFollowToCache(publishedNetworkDto);
+                    _eventProcessing.AddFollowToCache(publishedNetworkModel);
+                    break;
+                case NetworkConstants.UNFOLLOW_USER:
+                    _eventProcessing.RemoveFollowFromCache(publishedNetworkModel);
                     break;
             }
            

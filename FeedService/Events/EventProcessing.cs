@@ -1,4 +1,4 @@
-using FeedService.Dtos;
+using FeedService.Models;
 using FeedService.Services;
 
 namespace FeedService.Events{
@@ -12,20 +12,25 @@ namespace FeedService.Events{
             _postService=postService;
             _networkService=networkService;
         }
-        public void AddFollowToCache(PublishedNetworkDto publishedNetworkDto)
+        public void AddFollowToCache(PublishedNetworkModel publishedNetworkModel)
         {
-            _networkService.AddFollowToCache(publishedNetworkDto);
-            ReBuildHomeFeed(publishedNetworkDto.UserId);
+            _networkService.AddFollowToCache(publishedNetworkModel);
+            ReBuildHomeFeed(publishedNetworkModel.UserId);
         }
 
-        public void AddPostToCache(PublishedPostDto publishedPostDto)
+        public void AddPostToCache(PublishedPostModel publishedPostModel)
         {
-            _postService.AddPostToFeed(publishedPostDto);
+            _postService.AddPostToFeed(publishedPostModel);
         }
 
         public void ReBuildHomeFeed(string userId)
         {
            _postService.ReBuildHomeFeed(userId);
+        }
+
+        public void RemoveFollowFromCache(PublishedNetworkModel publishedNetworkModel)
+        {
+            _networkService.RemoveFollowFromCache(publishedNetworkModel);
         }
     }
 }
