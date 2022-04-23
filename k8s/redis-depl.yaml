@@ -24,6 +24,14 @@ spec:
                 key: REDIS_PASSWORD
           ports:
             - containerPort: 6379
+          volumeMounts:
+          - mountPath: /data
+            name: redisdb
+            
+      volumes:
+      - name: redisdb
+        persistentVolumeClaim:
+          claimName: redis-claim          
 ---
 apiVersion: v1
 kind: Service

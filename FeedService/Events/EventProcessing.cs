@@ -31,6 +31,7 @@ namespace FeedService.Events{
         public void RemoveFollowFromCache(PublishedNetworkModel publishedNetworkModel)
         {
             _networkService.RemoveFollowFromCache(publishedNetworkModel);
+            ReBuildHomeFeed(publishedNetworkModel.UserId);
         }
     }
 }
