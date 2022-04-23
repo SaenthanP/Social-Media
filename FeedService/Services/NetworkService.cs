@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using FeedService.Dtos;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace FeedService.Services{
@@ -12,14 +16,20 @@ namespace FeedService.Services{
         public void AddFollowToCache(PublishedNetworkDto publishedNetworkDto)
         {
             _redis.ListRightPush(publishedNetworkDto.UserToFollowId+"Follower List",publishedNetworkDto.UserId);
+            _redis.ListRightPush(publishedNetworkDto.UserId+"Following List",publishedNetworkDto.UserToFollowId);
 
         }
 
-        public RedisValue[] GetFollowListByUserId(string userId)
+        public IEnumerable<string> GetFollowingListByUserId(string userId)
         {
-            var followerList2=_redis.ListRange(userId+"Follower List");
+            var followingList=_redis.ListRange(userId+"Following List").Select(u=>(string)u);
+            return followingList;
+        }
 
-            return followerList2;
+        IEnumerable<string> INetworkService.GetFollowerListByUserId(string userId)
+        {
+            var followerList=_redis.ListRange(userId+"Follower List").Select(u=>(string)u);
+            return followerList;
         }
     }
 }

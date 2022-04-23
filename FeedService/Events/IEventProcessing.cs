@@ -5,5 +5,6 @@ namespace FeedService.Events{
         void AddFollowToCache(PublishedNetworkDto publishedNetworkDto);
         
         void AddPostToCache(PublishedPostDto publishedPostDto);
+        void ReBuildHomeFeed(string userId);
     }
 }

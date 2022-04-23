@@ -15,11 +15,17 @@ namespace FeedService.Events{
         public void AddFollowToCache(PublishedNetworkDto publishedNetworkDto)
         {
             _networkService.AddFollowToCache(publishedNetworkDto);
+            ReBuildHomeFeed(publishedNetworkDto.UserId);
         }
 
         public void AddPostToCache(PublishedPostDto publishedPostDto)
         {
             _postService.AddPostToFeed(publishedPostDto);
+        }
+
+        public void ReBuildHomeFeed(string userId)
+        {
+           _postService.ReBuildHomeFeed(userId);
         }
     }
 }

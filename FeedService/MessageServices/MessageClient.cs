@@ -8,6 +8,7 @@ using FeedService.EventConstants;
 using FeedService.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -54,9 +55,9 @@ namespace FeedService.MessageServices{
                 var jsonMessage=Encoding.UTF8.GetString(body);
 
                 if(ea.RoutingKey==POST_ROUTING_KEY){
-                    processPostEvent(JsonSerializer.Deserialize<PublishedPostDto>(jsonMessage));
+                    processPostEvent( JsonConvert.DeserializeObject<PublishedPostDto>(jsonMessage));
                 }else if(ea.RoutingKey==NETWORK_ROUTING_KEY){
-                    processNetworkEvent(JsonSerializer.Deserialize<PublishedNetworkDto>(jsonMessage));
+                    processNetworkEvent(JsonConvert.DeserializeObject<PublishedNetworkDto>(jsonMessage));
                 }
               
                 Console.WriteLine("hit the consumer");

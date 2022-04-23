@@ -6,5 +6,6 @@ namespace FeedService.Services{
         void AddPostToFeed(PublishedPostDto publishedPostDto);
         IEnumerable<PublishedPostDto> GetHomeFeedByUserId(string userId);
         IEnumerable<PublishedPostDto> GetUserFeedByUserId(string userId);
+        void ReBuildHomeFeed(string userId);
     }
 }

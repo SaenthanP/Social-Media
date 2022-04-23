@@ -45,3 +45,4 @@ C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.Enti
 C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\saent\Projects\Social-Media\FeedService\bin\Debug\net5.0\Newtonsoft.Json.dll
