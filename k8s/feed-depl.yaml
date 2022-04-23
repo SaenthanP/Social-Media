@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feedservice
+  template:
+    metadata:
+      labels:
+        app: feedservice
+    spec:
+      containers:
+      - name: feedservice
+        image: saenthan/feedservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: feedservice
+  ports:
+  - name: feedservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

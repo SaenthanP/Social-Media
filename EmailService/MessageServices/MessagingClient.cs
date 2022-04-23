@@ -64,7 +64,6 @@ namespace EmailService.MessageServices{
         }
 
         private void processEvent(MessageUserModel messageUserModel){
-            Console.WriteLine(_configuration["test"]);
             if(messageUserModel.EventType==EmailConstants.EMAIL_ON_REGISRATION){
                 Console.WriteLine("msg processed");
                 _eventProcessing.SendRegistrationEmail(messageUserModel);

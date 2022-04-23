@@ -18,7 +18,6 @@ namespace FeedService.Services{
         {
             _redis.ListRightPush(publishedNetworkModel.UserToInteractWithId+NetworkConstants.FOLLOWER_LIST,publishedNetworkModel.UserId);
             _redis.ListRightPush(publishedNetworkModel.UserId+NetworkConstants.FOLLOWING_LIST,publishedNetworkModel.UserToInteractWithId);
-
         }
 
         public IEnumerable<string> GetFollowingListByUserId(string userId)

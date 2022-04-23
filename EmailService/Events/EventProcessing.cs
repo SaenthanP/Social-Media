@@ -20,6 +20,7 @@ namespace EmailService.Events{
                 Credentials = new NetworkCredential(_configuration["MailTrapUsername"], _configuration["MailTrapPassword"]),
                 EnableSsl = true
             };
+            
             client.Send("support@social.com", messageUserModel.Email, "Thank you for registering your account!", $"Hello {messageUserModel.Username} thank you for joining our platform. We hope you enjoy your time! Please reach out if you have any questions!");
             Console.WriteLine("Email Sent");
         }

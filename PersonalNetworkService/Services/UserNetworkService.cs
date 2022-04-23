@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 public class UserNetworkService : IUserNetworkService
 {
-
     private readonly IConfiguration _configuration;
     private readonly IDriver _driver;
     private readonly IMapper _mapper;
@@ -20,6 +19,7 @@ public class UserNetworkService : IUserNetworkService
     {   
         _configuration=configuration;
         _driver=driver;
+        
         using (var scope = serviceProvider.CreateScope()){
              _mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
         }
@@ -63,8 +63,6 @@ public class UserNetworkService : IUserNetworkService
         {
             await session.CloseAsync();
         }
-       
-
     }
 
     public async Task<User> GetUser(string id)

@@ -21,9 +21,12 @@ namespace PersonalNetworkService.MessageServiceConsumer{
         private readonly IEventProcessing _eventProcessing;
         private const string EXCHANGE="event_bus";
         private const string ADD_TO_NETWORK_QUEUE="add_to_network_queue";
+        private const string ROUTING_KEY="create_user";
         public MessagingClient(IConfiguration configuration, IEventProcessing eventProcessing)
        {
            _configuration=configuration;
+           _eventProcessing=eventProcessing;
+
             var factory=new ConnectionFactory(){
                 HostName=_configuration.GetSection("RabbitMQHostname").Value,
                 Port=int.Parse(_configuration.GetSection("RabbitMQPort").Value)
@@ -31,13 +34,13 @@ namespace PersonalNetworkService.MessageServiceConsumer{
 
             _connection=factory.CreateConnection();
             _channel=_connection.CreateModel();
-
+           
             _channel.ExchangeDeclare(exchange:EXCHANGE, type:"direct");
            
             _channel.QueueDeclare(ADD_TO_NETWORK_QUEUE,true,false,false,null);
-            _channel.QueueBind(ADD_TO_NETWORK_QUEUE, EXCHANGE, "create_user");
-             Console.WriteLine("Consuming message bus");
-             _eventProcessing=eventProcessing;
+            _channel.QueueBind(ADD_TO_NETWORK_QUEUE, EXCHANGE, ROUTING_KEY);
+            
+            Console.WriteLine("Consuming message bus");
        }
        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {                 
@@ -63,7 +66,6 @@ namespace PersonalNetworkService.MessageServiceConsumer{
 
         private void processEvent(MessageUserModel messageUserModel){
             if(messageUserModel.EventType==PersonalNetworkConstants.CREATE_USER){
-                Console.WriteLine("msg processed");
                 _eventProcessing.AddUserToNetwork(messageUserModel);
             }
         }

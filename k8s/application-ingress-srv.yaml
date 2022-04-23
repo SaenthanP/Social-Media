@@ -29,3 +29,10 @@ spec:
                   name: post-clusterip-srv
                   port:
                     number: 80
+            - path: /api/Feed
+              pathType: Prefix
+              backend: 
+                service:
+                  name: feed-clusterip-srv
+                  port:
+                    number: 80
