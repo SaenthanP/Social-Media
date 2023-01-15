@@ -8,7 +8,7 @@ I developed an interest in microservices and distributed systems, and believed b
 * Docker used for containerization
 * Kubernetes used for orchestration
 * Github actions used for building each Docker container and deploying it to Docker Hub
-* Nginx Ingress Controller for loadbalancing. Allows for traffice to be directed to appropriate services and ingress level authentication.
+* Nginx Ingress Controller for loadbalancing. Allows for traffic to be directed to appropriate services and ingress level authentication.
 ### Messaging
 * RabbitMQ, using the direct Publisher/Consumer model. Each service/need will have its own queue. 
 * Will explore GRPC in the future
